@@ -1,8 +1,10 @@
-#DATA STRUCTURES : AVL Project
+# **DATA STRUCTURES : AVL Project** 
+
 due date: 30.12
 Collaborators: 
-- Tamer Abd  Alrazaq
-- Oday Saada
+Tamer Abd  Alrazaq 
+
+Oday Saada
 
 * TODO(13.12.22):
 _ ** Implementing AVLNode (warmup) **
