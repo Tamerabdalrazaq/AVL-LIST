@@ -7,15 +7,15 @@
 ## TODO(13.12.22)
 ### Implementing AVLNode Class (warmup): 
 - ~~getLeft~~ (T)
-- getRight (O)
+- ~~getRight~~ (O)
 - ~~getParent~~ (T)
-- getValue (O)
+- ~~getValue~~ (O)
 - ~~getHeight~~ (T)
-- setLeft (O)
+- ~~setLeft~~ (O)
 - ~~setRight~~ (T)
-- setParent (O)
+- ~~setParent~~ (O)
 - ~~setValue~~ (T)
-- setHeight (O)
+- ~~setHeight~~ (O)
 - ~~isRealNode~~  (T)**(Changes may occur)**
 
 ## TODO(Next)
