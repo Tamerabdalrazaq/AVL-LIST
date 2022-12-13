@@ -5,7 +5,7 @@
 ###### **Tamer Abd  Alrazaq(T)**, **Oday Saada(O)**
 
 ## TODO(13.12.22)
-### Implementing AVLNode (warmup): 
+### Implementing AVLNode Class (warmup): 
 - ~~getLeft~~ (T)
 - getRight (O)
 - ~~getParent~~ (T)
@@ -18,7 +18,9 @@
 - setHeight (O)
 - ~~isRealNode~~  (T)**(Changes may occur)**
 
-
+## TODO(Next)
+### Implementing AVLTreeList Class: 
+- TBA
 
 
 
