@@ -2,6 +2,7 @@
 import avl_template_new
 
 AVLNode = avl_template_new.AVLNode
+AVLTreeList = avl_template_new.AVLTreeList
 
 n03 = AVLNode(3)
 n05 = AVLNode(5)
