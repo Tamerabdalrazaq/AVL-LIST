@@ -20,7 +20,7 @@ class AVLNode(object):
 		self.right = None
 		self.parent = None
 		self.height = -1 # Balance factor
-		
+		self.size = 1
 
 	"""returns the left child
 	@rtype: AVLNode
@@ -104,7 +104,7 @@ class AVLNode(object):
 	@param h: the height
 	"""
 	def setHeight(self, h):
-		self.height=height
+		self.height= h
 		return None
 
 	"""returns whether self is not a virtual node 
@@ -130,6 +130,8 @@ class AVLTreeList(object):
 	def __init__(self):
 		self.size = 0
 		self.root = None
+		self.first = None
+		self.last = None
 		# add your fields here
 
 
@@ -164,6 +166,9 @@ class AVLTreeList(object):
 	@returns: the number of rebalancing operation due to AVL rebalancing
 	"""
 	def insert(self, i, val):
+		self.first = AVLNode(val)
+		self.size += 1
+
 		return -1
 
 

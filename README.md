@@ -20,7 +20,12 @@
 
 ## TODO(Next)
 ### Implementing AVLTreeList Class: 
-- TBA
+- Constructor
+- Fileds: [Size in node, first and last in AVLTree]
+- Methods: 
+- - Successor
+- - Predecessor
+- - Rotation
 
 
 
