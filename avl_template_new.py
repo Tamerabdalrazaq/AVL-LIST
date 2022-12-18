@@ -4,8 +4,6 @@
 #id2      - complete info
 #name2    - complete info  
 
-
-
 """A class represnting a node in an AVL tree"""
 
 class AVLNode(object):
@@ -113,8 +111,8 @@ class AVLNode(object):
 	@returns: False if self is a virtual node, True otherwise.
 	"""
 	def isRealNode(self):
-		return self.right is None and self.left is None
-
+		return self.right is not None and self.left is not None
+	
 
 
 """
@@ -168,7 +166,6 @@ class AVLTreeList(object):
 	def insert(self, i, val):
 		self.first = AVLNode(val)
 		self.size += 1
-
 		return -1
 
 
@@ -260,6 +257,28 @@ class AVLTreeList(object):
 	@returns: the root, None if the list is empty
 	"""
 	def getRoot(self):
-		return None
+		return self.root
 
+	def successor(self, node):
+		if(node.right.isRealNode()):
+			x = node.right
+			while (x.left.isRealNode()):
+				x = x.left
+			return x
+		else:
+			x = node
+			while(x != self.getRoot() and x == x.parent.right):
+				x = x.parent
+			return x.parent
 
+	def predecessor(self, node):
+		if(node.left.isRealNode()):
+			x = node.left
+			while (x.right.isRealNode()):
+				x = x.right
+			return x
+		else:
+			x = node
+			while(x != self.getRoot() and x == x.parent.left):
+				x = x.parent
+			return x.parent
