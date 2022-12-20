@@ -128,7 +128,7 @@ class AVLNode(object):
 	
 	def __str__(self) -> str:
 		return ('value: ' + str(self.value) + '| isReal: ' 
-		+ str(self.isRealNode()) + '| size: ' +str(self.size))
+		+ str(self.isRealNode()) + '| size: ' +str(self.size) + '| height: ' + str(self.getHeight()) )
 
 
 """
@@ -183,6 +183,17 @@ class AVLTreeList(object):
 
 
 # UNFINISHED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# TODO: Re-arrange functions structure
+	def insert(self, i, val):
+		if(self.size == 0):
+			node = create_leaf(val)
+			self.root = node
+			self.size += 1
+			return
+		
+		self.insert_rec(self.root,i,val)
+		self.size += 1
+		return -1
 	def insert_rec(self, node, i,val):
 		if(i==0):
 			if(node.getLeft().isRealNode() == False):
@@ -194,6 +205,7 @@ class AVLTreeList(object):
 				print('| <-  |') 
 				print(new_node )
 				print('----------------')
+				self.series_of_actions(new_node)
 				return
 		if(i==1):
 			if(node.getRight().isRealNode()==False):
@@ -205,6 +217,7 @@ class AVLTreeList(object):
 				print('| ->  |') 
 				print(new_node) 
 				print('----------------')
+				self.series_of_actions(new_node)
 				return
 
 		if(node.getLeft().isRealNode() and i<=node.getLeft().getSize()):
@@ -220,21 +233,26 @@ class AVLTreeList(object):
 			print('| ->  |') 
 			print(new_node)
 			print('----------------')
+			self.series_of_actions(new_node)
 			return
 			
 		node.setSize(node.getSize()+1)
-		
-	def insert(self, i, val):
-		if(self.size == 0):
-			node = create_leaf(val)
-			self.root = node
-			self.size += 1
-			return
-		new_node = self.insert_rec(self.root,i,val)
-		self.size += 1
-		return -1
-	
+#TODO need to split to height, more actions...
+	def series_of_actions(self,new_node):
+		n = new_node.getParent()
+		while(True):
+			x=n.getLeft().getHeight()
+			y=n.getRight().getHeight()
+			height_changed = max(x,y)+1==n.getHeight()
+			if(max(x,y)+1==n.getHeight()):
+				break
+			n.setHeight(max(x,y)+1)
+			if(n==self.root):
+				break
+			n = n.getParent()
 
+
+		return
 
 	"""deletes the i'th item in the list
 
@@ -325,7 +343,7 @@ class AVLTreeList(object):
 	"""
 	def getRoot(self):
 		return self.root
-# TODO: Handle min, max 
+# TODO: Handle min, max  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	def successor(self, node):
 		if(node.right.isRealNode()):
 			x = node.right
@@ -357,4 +375,5 @@ def create_leaf(val):
 	r_virtual = AVLNode(None)
 	leaf.right = r_virtual
 	leaf.left = l_virtual
+	leaf.setHeight(0)
 	return leaf
