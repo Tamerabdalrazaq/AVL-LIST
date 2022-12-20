@@ -27,6 +27,8 @@ class AVLNode(object):
 	def getLeft(self):
 		return self.left
 
+	def getSize(self):
+		return self.size
 
 	"""returns the right child
 
@@ -60,11 +62,22 @@ class AVLNode(object):
 	def getHeight(self):
 		return self.height
 
+
+
+	"""
+	@type size: int
+	"""
+	def setSize(self, size):
+		self.size = size
+
+
 	"""sets left child
 
 	@type node: AVLNode
 	@param node: a node
 	"""
+
+
 	def setLeft(self, node):
 		self.left=node
 		return None
@@ -163,10 +176,35 @@ class AVLTreeList(object):
 	@rtype: list
 	@returns: the number of rebalancing operation due to AVL rebalancing
 	"""
+# UNFINISHED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	def insert_rec( self,node, i,val):
+		if(node.getSize() == 1):
+			new_node = create_leaf(val)
+			new_node.parent(node)
+			node.setSize(node.getSize() + 1)
+			if(i == 0):
+				node.setLeft(new_node)
+			elif(i==1):
+				node.setRight(new_node)
+
+		if(i<=node.getLeft().getSize()):
+			self.insert_rec(self,node.getLeft(),i,val)
+		if(i>node.getRight().getSize()):
+			self.insert_rec(self,node.getRight(),i - (node.getLeft().size + 1),val)
+		return
+
+
 	def insert(self, i, val):
+		if(self.size == 0):
+			node = AVLNode(val)
+			self.root = node
+			self.size += 1
+			return
+		self.insert_rec(self.root,i,val)
 		self.first = AVLNode(val)
 		self.size += 1
 		return -1
+	
 
 
 	"""deletes the i'th item in the list
@@ -258,7 +296,7 @@ class AVLTreeList(object):
 	"""
 	def getRoot(self):
 		return self.root
-
+# TODO: Handle min, max 
 	def successor(self, node):
 		if(node.right.isRealNode()):
 			x = node.right
@@ -282,3 +320,12 @@ class AVLTreeList(object):
 			while(x != self.getRoot() and x == x.parent.left):
 				x = x.parent
 			return x.parent
+
+
+def create_leaf(val):
+	leaf = AVLNode(val)
+	l_virtual = AVLNode()
+	r_virtual = AVLNode()
+	leaf.right = r_virtual
+	leaf.left = l_virtual
+	return leaf
