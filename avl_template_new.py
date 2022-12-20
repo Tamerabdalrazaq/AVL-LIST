@@ -126,6 +126,9 @@ class AVLNode(object):
 	def isRealNode(self):
 		return self.right is not None and self.left is not None
 	
+	def __str__(self) -> str:
+		return ('value: ' + str(self.value) + '| isReal: ' 
+		+ str(self.isRealNode()) + '| size: ' +str(self.size))
 
 
 """
@@ -176,32 +179,58 @@ class AVLTreeList(object):
 	@rtype: list
 	@returns: the number of rebalancing operation due to AVL rebalancing
 	"""
+
+
+
 # UNFINISHED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	def insert_rec( self,node, i,val):
-		if(node.getSize() == 1):
-			new_node = create_leaf(val)
-			new_node.parent(node)
-			node.setSize(node.getSize() + 1)
-			if(i == 0):
+	def insert_rec(self, node, i,val):
+		if(i==0):
+			if(node.getLeft().isRealNode() == False):
+				new_node = create_leaf(val)
+				new_node.setParent(node)
+				node.setSize(node.getSize() + 1)
 				node.setLeft(new_node)
-			elif(i==1):
+				print(node) 
+				print('| <-  |') 
+				print(new_node )
+				print('----------------')
+				return
+		if(i==1):
+			if(node.getRight().isRealNode()==False):
+				new_node = create_leaf(val)
+				new_node.setParent(node)
+				node.setSize(node.getSize() + 1)
 				node.setRight(new_node)
+				print(node )
+				print('| ->  |') 
+				print(new_node) 
+				print('----------------')
+				return
 
-		if(i<=node.getLeft().getSize()):
-			self.insert_rec(self,node.getLeft(),i,val)
-		if(i>node.getRight().getSize()):
-			self.insert_rec(self,node.getRight(),i - (node.getLeft().size + 1),val)
-		return
-
-
+		if(node.getLeft().isRealNode() and i<=node.getLeft().getSize()):
+			return self.insert_rec(node.getLeft(),i,val)
+		if(node.getRight().isRealNode() and i>=node.getLeft().getSize()+1):
+			return self.insert_rec(node.getRight(),i - (node.getLeft().size + 1),val)
+		if(node.getRight().isRealNode()== False and i>=node.getLeft().getSize()+1):
+			new_node = create_leaf(val)
+			new_node.setParent(node)
+			node.setSize(node.getSize() + 1)
+			node.setRight(new_node)
+			print(node )
+			print('| ->  |') 
+			print(new_node)
+			print('----------------')
+			return
+			
+		node.setSize(node.getSize()+1)
+		
 	def insert(self, i, val):
 		if(self.size == 0):
-			node = AVLNode(val)
+			node = create_leaf(val)
 			self.root = node
 			self.size += 1
 			return
-		self.insert_rec(self.root,i,val)
-		self.first = AVLNode(val)
+		new_node = self.insert_rec(self.root,i,val)
 		self.size += 1
 		return -1
 	
@@ -324,8 +353,8 @@ class AVLTreeList(object):
 
 def create_leaf(val):
 	leaf = AVLNode(val)
-	l_virtual = AVLNode()
-	r_virtual = AVLNode()
+	l_virtual = AVLNode(None)
+	r_virtual = AVLNode(None)
 	leaf.right = r_virtual
 	leaf.left = l_virtual
 	return leaf

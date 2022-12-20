@@ -44,4 +44,23 @@ def test_successor_predecessor():
     assert tree.predecessor(n17) == n10
     assert tree.predecessor(n20) == n17
 
-test_successor_predecessor()
+
+def inserttest():
+    tree=AVLTreeList()
+    tree.insert(0, 10)
+    tree.insert(0, 5)
+    tree.insert(0, 3)
+    tree.insert(2, 8)
+    tree.insert(4, 20)
+    tree.insert(4,17)
+    tree.insert(6, 18)
+    print('____________________________')
+    print(tree.getRoot().getLeft().getLeft())
+    print(tree.getRoot().getLeft())
+    print(tree.getRoot().getLeft().getRight())
+    print(tree.getRoot())
+    print(tree.getRoot().getRight().getLeft())
+    print(tree.getRoot().getRight())
+
+inserttest()
+# test_successor_predecessor()
