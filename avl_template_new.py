@@ -63,6 +63,8 @@ class AVLNode(object):
 		return self.height
 
 
+	def getBF(self):
+		return self.getLeft().getHeight() - self.getRight().getHeight() 
 
 	"""
 	@type size: int
@@ -108,6 +110,7 @@ class AVLNode(object):
 	def setValue(self, value):
 		self.value = value
 		return None
+
 
 	"""sets the balance factor of the node
 
@@ -194,6 +197,8 @@ class AVLTreeList(object):
 		self.insert_rec(self.root,i,val)
 		self.size += 1
 		return -1
+
+
 	def insert_rec(self, node, i,val):
 		if(i==0):
 			if(node.getLeft().isRealNode() == False):
@@ -201,10 +206,10 @@ class AVLTreeList(object):
 				new_node.setParent(node)
 				node.setSize(node.getSize() + 1)
 				node.setLeft(new_node)
-				print(node) 
-				print('| <-  |') 
-				print(new_node )
-				print('----------------')
+				# print(node) 
+				# print('| <-  |') 
+				# print(new_node )
+				# print('----------------')
 				self.series_of_actions(new_node)
 				return
 		if(i==1):
@@ -213,10 +218,10 @@ class AVLTreeList(object):
 				new_node.setParent(node)
 				node.setSize(node.getSize() + 1)
 				node.setRight(new_node)
-				print(node )
-				print('| ->  |') 
-				print(new_node) 
-				print('----------------')
+				# print(node )
+				# print('| ->  |') 
+				# print(new_node) 
+				# print('----------------')
 				self.series_of_actions(new_node)
 				return
 
@@ -229,30 +234,104 @@ class AVLTreeList(object):
 			new_node.setParent(node)
 			node.setSize(node.getSize() + 1)
 			node.setRight(new_node)
-			print(node )
-			print('| ->  |') 
-			print(new_node)
-			print('----------------')
+			# print(node )
+			# print('| ->  |') 
+			# print(new_node)
+			# print('----------------')
 			self.series_of_actions(new_node)
 			return
 			
 		node.setSize(node.getSize()+1)
 #TODO need to split to height, more actions...
 	def series_of_actions(self,new_node):
+		self.maintain_AVL(new_node)
+		return
+
+	def maintain_AVL(self, new_node):
+		print("Inserted " + str(new_node.getValue()))
 		n = new_node.getParent()
 		while(True):
 			x=n.getLeft().getHeight()
 			y=n.getRight().getHeight()
-			height_changed = max(x,y)+1==n.getHeight()
-			if(max(x,y)+1==n.getHeight()):
-				break
-			n.setHeight(max(x,y)+1)
+			height_changed = max(x,y)+1 != n.getHeight()
+			if(height_changed):
+				n.setHeight(max(x,y)+1)
+			BF = n.getBF()
+			if(abs(BF) == 2):
+				self.rotate(n, BF)
+			# size_changed= (n.getLeft().getSize()+n.getRight().getSize()+1)!=n.getSize()
+			# if(size_changed):
+			# 	n.setSize(n.getLeft().getSize()+n.getRight().getSize()+1)
 			if(n==self.root):
 				break
 			n = n.getParent()
+		
+
+	def rotate(self, n, BF):
+		print("Rotating " + str(n.getValue()) + " With BF: " + str(BF))
+		if(BF==-2):
+			if(n.getRight().getBF()==-1):
+				if(self.getRoot() == n): 
+					self.setRoot(n.getRight())
+				self.rotate_left(n.getRight())
+			elif(n.getRight().getBF()==1):
+				n_right_left = n.getRight().getLeft()
+				if(self.getRoot() == n): 
+					self.setRoot(n_right_left)
+				self.rotate_right(n_right_left)
+				self.rotate_left(n_right_left)
+		else:
+			if(n.getLeft().getBF()==1):
+				if(self.getRoot() == n): 
+					self.setRoot(n.getLeft())
+				self.rotate_right(n.getLeft())
+			elif(n.getLeft().getBF()==-1):
+				n_left_right = n.getLeft().getRight()
+				if(self.getRoot() == n): 
+					self.setRoot(n_left_right)
+				self.rotate_left(n_left_right)
+				self.rotate_right(n_left_right)
+
+	def rotate_right(self,n):
+		# print("Rotating Right: ")
+		# print(n)
+		# n.setHeight(n.getHeight())
+		print("Rotating Right: " + str(n.getValue()))
+		newleftforparent=n.getRight()
+		parent=n.getParent()
+		# n.setHeight(n.getHeight()+1)
+		parent.setHeight(parent.getHeight()-2)
+		n.setParent(parent.getParent())
+		if(n.getParent()!=None):
+			n.getParent().setLeft(n)
+		n.setRight(parent)
+		parent.setParent(n)
+		parent.setLeft(newleftforparent)
+		print('Done Rotating. ')
+		print('parent:')
+		print(n.getParent())
+		print('left:')
+		print(n.getLeft())
+		print('right:')
+		print(n.getRight())
+
+	def rotate_left(self,n):
+		print("Rotating Left: " + str(n.getValue()))
+		# n.setHeight(n.getHeight()-1)
+		newrightforparent=n.getLeft()
+		parent=n.getParent()
+		parent.setHeight(parent.getHeight()-2)
+		n.setParent(parent.getParent())
+		if(n.getParent()!=None):
+			n.getParent().setRight(n)
+		n.setLeft(parent)
+		parent.setParent(n)
+		parent.setRight(newrightforparent)
 
 
-		return
+
+			
+
 
 	"""deletes the i'th item in the list
 
@@ -343,6 +422,9 @@ class AVLTreeList(object):
 	"""
 	def getRoot(self):
 		return self.root
+	
+	def setRoot(self, root):
+		self.root = root
 # TODO: Handle min, max  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	def successor(self, node):
 		if(node.right.isRealNode()):
