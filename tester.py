@@ -80,11 +80,15 @@ def test_rotation():
     print('____________________________')
     print('____________________________')
     print('____________________________')
+    print(tree.size)
     print(tree.getRoot())
     print(tree.getRoot().getLeft())
     print(tree.getRoot().getRight())
     print(tree.getRoot().getLeft().getLeft())
     print(tree.getRoot().getLeft().getRight())
+
+    
+
 
 
 # test_successor_predecessor()
