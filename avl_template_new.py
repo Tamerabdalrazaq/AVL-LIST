@@ -196,6 +196,8 @@ class AVLTreeList(object):
 		
 		self.insert_rec(self.root,i,val)
 		self.size += 1
+		#print(printree(self,False))
+		printTree(self.root)
 		return -1
 
 
@@ -250,6 +252,7 @@ class AVLTreeList(object):
 	def maintain_AVL(self, new_node):
 		print("Inserted " + str(new_node.getValue()))
 		n = new_node.getParent()
+		n2=new_node
 		while(True):
 			x=n.getLeft().getHeight()
 			y=n.getRight().getHeight()
@@ -259,12 +262,24 @@ class AVLTreeList(object):
 			BF = n.getBF()
 			if(abs(BF) == 2):
 				self.rotate(n, BF)
+			n.setSize(n.getLeft().getSize()+n.getRight().getSize()+1)
 			# size_changed= (n.getLeft().getSize()+n.getRight().getSize()+1)!=n.getSize()
 			# if(size_changed):
-			# 	n.setSize(n.getLeft().getSize()+n.getRight().getSize()+1)
+			#n.setSize(n.getLeft().getSize()+n.getRight().getSize()+1)
 			if(n==self.root):
 				break
 			n = n.getParent()
+
+		#while(True):
+                 #       n2.setSize(n2.getLeft().getSize()+n2.getRight().getSize()+1)
+                  #      if(n2==self.root):
+                   #             break
+                    #    n2 = n2.getParent()
+
+
+			
+		
+                        
 		
 
 	def rotate(self, n, BF):
@@ -300,6 +315,7 @@ class AVLTreeList(object):
 		newleftforparent=n.getRight()
 		parent=n.getParent()
 		# n.setHeight(n.getHeight()+1)
+		parent.setSize(parent.getSize()-n.getSize())
 		parent.setHeight(parent.getHeight()-2)
 		n.setParent(parent.getParent())
 		if(n.getParent()!=None):
@@ -320,6 +336,7 @@ class AVLTreeList(object):
 		# n.setHeight(n.getHeight()-1)
 		newrightforparent=n.getLeft()
 		parent=n.getParent()
+		parent.setSize(parent.getSize()-n.getSize())
 		parent.setHeight(parent.getHeight()-2)
 		n.setParent(parent.getParent())
 		if(n.getParent()!=None):
@@ -327,10 +344,6 @@ class AVLTreeList(object):
 		n.setLeft(parent)
 		parent.setParent(n)
 		parent.setRight(newrightforparent)
-
-
-
-			
 
 
 	"""deletes the i'th item in the list
@@ -451,11 +464,22 @@ class AVLTreeList(object):
 			return x.parent
 
 
+
+def printTree(node, level=0):
+    if node != None:
+        printTree(node.right, level + 1)
+        print(' ' * 4 * level + '-> ' + str(node.value))
+        printTree(node.left, level + 1)
+        
+
 def create_leaf(val):
-	leaf = AVLNode(val)
-	l_virtual = AVLNode(None)
-	r_virtual = AVLNode(None)
-	leaf.right = r_virtual
-	leaf.left = l_virtual
-	leaf.setHeight(0)
-	return leaf
+        leaf = AVLNode(val)
+        l_virtual = AVLNode(None)
+        l_virtual.setSize(0)
+        r_virtual = AVLNode(None)
+        r_virtual.setSize(0)
+        leaf.right = r_virtual
+        leaf.left = l_virtual
+        leaf.setHeight(0)
+        return leaf
+
