@@ -232,7 +232,7 @@ class AVLTreeList(object):
                 # print(new_node )
                 # print('----------------')
                 return self.series_of_actions(new_node)
-        if (i >= node.getLeft().getSize() + 1):
+        if (i >=node.getLeft().getSize()+1):
             if (node.getRight().isRealNode() == False):
                 new_node = create_leaf(val)
                 new_node.setParent(node)
@@ -281,9 +281,6 @@ class AVLTreeList(object):
             if (abs(BF) == 2):
                 numofrot = self.rotate(n, BF)
             n.setSize(n.getLeft().getSize() + n.getRight().getSize() + 1)
-            # size_changed= (n.getLeft().getSize()+n.getRight().getSize()+1)!=n.getSize()
-            # if(size_changed):
-            # n.setSize(n.getLeft().getSize()+n.getRight().getSize()+1)
             if (n == self.root):
                 break
             n = n.getParent()
@@ -296,27 +293,29 @@ class AVLTreeList(object):
             if (n.getRight().getBF() == -1):
                 if (self.getRoot() == n):
                     self.setRoot(n.getRight())
-                self.rotate_left(n.getRight(), "right")
+                self.rotate_left(n.getRight(), "left")
                 c += 1
             elif (n.getRight().getBF() == 1):
                 n_right_left = n.getRight().getLeft()
                 if (self.getRoot() == n):
                     self.setRoot(n_right_left)
                 self.rotate_right(n_right_left, "right")
-                self.rotate_left(n_right_left, "right")
+                self.rotate_left(n_right_left, "left")
                 c += 2
         else:
             if (n.getLeft().getBF() == 1):
                 if (self.getRoot() == n):
                     self.setRoot(n.getLeft())
-                self.rotate_right(n.getLeft(), "left")
+                self.rotate_right(n.getLeft(), "right")
                 c += 1
             elif (n.getLeft().getBF() == -1):
                 n_left_right = n.getLeft().getRight()
                 if (self.getRoot() == n):
                     self.setRoot(n_left_right)
                 self.rotate_left(n_left_right, "left")
-                self.rotate_right(n_left_right, "left")
+                print("before right rotating")
+                printTree(self.root)
+                self.rotate_right(n_left_right, "right")
                 c += 2
         return c
 
@@ -330,15 +329,25 @@ class AVLTreeList(object):
         # n.setHeight(n.getHeight()+1)
         parent.setSize(parent.getSize() - n.getSize())
         parent.setHeight(parent.getHeight() - 2)
+        if(parent.getLeft()==n.getParent):
+            rotationfrom="left"
+        if (parent.getRight() == n.getParent):
+            rotationfrom = "right"
         n.setParent(parent.getParent())
         if (n.getParent() != None):
-            if (rotationfrom == "right"):
-                n.getParent().setRight(n)
-            else:
+            if (n.getParent().getLeft() == parent):
                 n.getParent().setLeft(n)
+            if (n.getParent().getRight() == parent):
+                n.getParent().setRight(n)
+            # if (rotationfrom == "right"):
+            #     n.getParent().setRight(n)
+            # else:
+            #     n.getParent().setLeft(n)
         n.setRight(parent)
         parent.setParent(n)
         parent.setLeft(newleftforparent)
+        parent.setHeight(max(parent.getRight().getHeight(), parent.getLeft().getHeight()) + 1)
+        parent.setSize(parent.getRight().getSize() + parent.getLeft().getSize() + 1)
         print('Done Rotating. ')
         print('parent:')
         print(n.getParent())
@@ -356,13 +365,19 @@ class AVLTreeList(object):
         parent.setHeight(parent.getHeight() - 2)
         n.setParent(parent.getParent())
         if (n.getParent() != None):
-            if (rotationfrom == "right"):
-                n.getParent().setRight(n)
-            else:
+            if (n.getParent().getLeft() == parent):
                 n.getParent().setLeft(n)
+            if (n.getParent().getRight() == parent):
+                n.getParent().setRight(n)
+            # if (rotationfrom == "right"):
+            #     n.getParent().setRight(n)
+            # else:
+            #     n.getParent().setLeft(n)
         n.setLeft(parent)
         parent.setParent(n)
         parent.setRight(newrightforparent)
+        parent.setHeight(max(parent.getRight().getHeight(),parent.getLeft().getHeight())+1)
+        parent.setSize(parent.getRight().getSize()+parent.getLeft().getSize()+1)
 
     """deletes the i'th item in the list
 
@@ -508,7 +523,7 @@ class AVLTreeList(object):
 def printTree(node, level=0):
     if node is not None:
         printTree(node.right, level + 1)
-        print(' ' * 8 * level + '-> ' + str(node.value))
+        print(' ' * 8 * level + '-> ' + str(node.value) )
         printTree(node.left, level + 1)
 
 

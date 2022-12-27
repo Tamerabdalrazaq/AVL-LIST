@@ -1,4 +1,4 @@
-
+import random
 import avl_template_new
 
 AVLNode = avl_template_new.AVLNode
@@ -71,12 +71,32 @@ def inserttest():
 
 def test_rotation():
     tree=AVLTreeList()
+    tree.insert(0,0)
+    tree.insert(0,0)
     tree.insert(0, 1)
     tree.insert(0, 2)
-    tree.insert(0, 3)
-    tree.insert(0, 4)
-    tree.insert(0, 5)
-    x=tree.insert(0, 6)
+    tree.insert(3,3)
+    tree.insert(2,4)
+    tree.insert(3,5)
+    # tree.insert(0, 0)
+    # tree.insert(0,0)
+    # tree.insert(0,1)
+    # tree.insert(1,2)
+    # tree.insert(1,3)
+    # tree.insert(2,4)
+
+    # tree.insert(0,2)
+    # tree.insert(2,3)
+    # tree.insert(0,4)
+    # tree.insert(2,5)
+    # tree.insert(4,6)
+    # tree.insert(5,7)
+
+    # tree.insert(0, 2)
+    # tree.insert(0, 3)
+    # tree.insert(0, 4)
+    # tree.insert(0, 5)
+    # x=tree.insert(0, 6)
 
     print('____________________________')
     print('____________________________')
@@ -87,16 +107,50 @@ def test_rotation():
     print(tree.getRoot().getRight())
     print(tree.getRoot().getLeft().getLeft())
     print(tree.getRoot().getLeft().getRight())
-    print("retrieve(5):")
-    print(tree.retrieve(5))
+    print("retrieve:")
+    print(tree.retrieve(2))
     print("number of rotations")
-    print(x)
+    #print(x)
+    avl_template_new.printTree(tree.getRoot())
     print(tree.getRoot().getLeft().isRealNode())
 
+def test_2():
+    tree=AVLTreeList()
+    list = []
+    n = 6
+    tree.insert(0, 0)
+    list.insert(0, 0)
+    for i in range(0, n):
+        index = random.randrange(len(list))
+        print('inserting ' + str(i) + ' at ' + str(index))
+        list.insert(index, i)
+        tree.insert(index, i)
+
+    print('__________________')
+    print('__________________')
+    print('final tree:')
+    avl_template_new.printTree(tree.root)
+    print('final List:')
+    print(list)
+    print('__________________')
+    print('__________________')
+
+    for i in range(1,len(list)):
+        expected = list[i]
+        returned = tree.retrieve(i).value
+        assert (list[i] == tree.retrieve(i).value), print_err(i, expected, returned)
+        def print_err(i, e, r):
+            print("ERROR!")
+            print("index: " +str(i))
+            print("expected: " +str(e))
+            print("returned: " +str(r))
     
 
 
 
 # test_successor_predecessor()
 # inserttest()
-test_rotation()
+#test_rotation()
+for i in range(40):
+    test_2()
+    print('***********************')
