@@ -76,7 +76,8 @@ def test_rotation():
     tree.insert(0, 3)
     tree.insert(0, 4)
     tree.insert(0, 5)
-    tree.insert(0, 6)
+    x=tree.insert(0, 6)
+
     print('____________________________')
     print('____________________________')
     print('____________________________')
@@ -86,6 +87,11 @@ def test_rotation():
     print(tree.getRoot().getRight())
     print(tree.getRoot().getLeft().getLeft())
     print(tree.getRoot().getLeft().getRight())
+    print("retrieve(5):")
+    print(tree.retrieve(5))
+    print("number of rotations")
+    print(x)
+    print(tree.getRoot().getLeft().isRealNode())
 
     
 
