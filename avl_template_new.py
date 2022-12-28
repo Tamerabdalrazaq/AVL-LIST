@@ -145,7 +145,9 @@ class AVLNode(object):
     def copy_from(self, y):
         self.setParent(y.getParent())
         self.setLeft(y.getLeft())
+        y.getLeft().setParent(self)
         self.setRight(y.getRight())
+        y.getRight().setParent(self)
         self.setSize(y.getSize())
         self.setHeight(y.getHeight())
         if(y.getParent() is not None):
@@ -436,6 +438,7 @@ class AVLTreeList(object):
         temp.copy_from(x)
         x.copy_from(y)
         y.copy_from(temp)
+        printTree(self.root)
 
     """returns the value of the first item in the list
 
