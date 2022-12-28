@@ -142,6 +142,14 @@ class AVLNode(object):
         return ('value: ' + str(self.value) + '| isReal: '
                 + str(self.isRealNode()) + '| size: ' + str(self.size) + '| height: ' + str(self.getHeight()))
 
+    def copy_from(self, y):
+        self.setParent(y.getParent())
+        self.setLeft(y.getLeft())
+        self.setRight(y.getRight())
+        self.setSize(y.getSize())
+        self.setHeight(y.getHeight())
+
+
 
 """
 A class implementing the ADT list, using an AVL tree.
@@ -269,7 +277,8 @@ class AVLTreeList(object):
 
     def maintain_AVL(self, new_node):
         print("Inserted " + str(new_node.getValue()))
-        n = new_node.getParent()
+        #n = new_node.getParent()
+        n=new_node
         numofrot = 0
         while (True):
             # x = n.getLeft().getHeight()
@@ -292,34 +301,34 @@ class AVLTreeList(object):
         c = 0
         print("Rotating " + str(n.getValue()) + " With BF: " + str(BF))
         if (BF == -2):
-            if (n.getRight().getBF() == -1):
+            if (n.getRight().getBF() == -1 or n.getRight().getBF() == 0):
                 if (self.getRoot() == n):
                     self.setRoot(n.getRight())
-                self.rotate_left(n.getRight(), "left")
+                self.rotate_left(n.getRight())
                 c += 1
             elif (n.getRight().getBF() == 1):
                 n_right_left = n.getRight().getLeft()
                 if (self.getRoot() == n):
                     self.setRoot(n_right_left)
-                self.rotate_right(n_right_left, "right")
-                self.rotate_left(n_right_left, "left")
+                self.rotate_right(n_right_left)
+                self.rotate_left(n_right_left)
                 c += 2
         else:
-            if (n.getLeft().getBF() == 1):
+            if (n.getLeft().getBF() == 1 or n.getLeft().getBF() == 0):
                 if (self.getRoot() == n):
                     self.setRoot(n.getLeft())
-                self.rotate_right(n.getLeft(), "right")
+                self.rotate_right(n.getLeft())
                 c += 1
             elif (n.getLeft().getBF() == -1):
                 n_left_right = n.getLeft().getRight()
                 if (self.getRoot() == n):
                     self.setRoot(n_left_right)
-                self.rotate_left(n_left_right, "left")
-                self.rotate_right(n_left_right, "right")
+                self.rotate_left(n_left_right)
+                self.rotate_right(n_left_right)
                 c += 2
         return c
 
-    def rotate_right(self, n, rotationfrom):
+    def rotate_right(self, n):
         newleftforparent = n.getRight()
         parent = n.getParent()
         if (parent is not None):
@@ -340,7 +349,7 @@ class AVLTreeList(object):
         n.setSize(n.getRight().getSize() + n.getLeft().getSize() + 1)
         n.setHeight(max(n.getRight().getHeight(), n.getLeft().getHeight()) + 1)
 
-    def rotate_left(self, n, rotationfrom):
+    def rotate_left(self, n):
         newrightforparent = n.getLeft()
         parent = n.getParent()
         parent.setHeight(parent.getHeight() - 2)
@@ -371,36 +380,57 @@ class AVLTreeList(object):
     @returns: the number of rebalancing operation due to AVL rebalancing
     """
 
-    # def delete(self, i):
-    #     node = self.retrieve(i)
-    #     if (node is None):
-    #         return -1
-    #     if(node.getRight().isRealNode()==True and node.getLeft().isRealNode()==True):
-    #         new_node = self.successor(node)
-    #         left=new_node.getLeft()
-    #         right=new_node.getRight()
-    #         self.deletebynode(new_node)
-    #         new_node.setLeft(node.getLeft())
-    #         new_node.setRight(node.getRight())
-    #         new_node.setParent(node.getParent())
-    #         left.setParent(node)
-    #         right.setParent(node)
-    #     if(node.getRight().isRealNode()==False):
-    #         new_node=node.getLeft()
-    #         new_node.setParent(node.getParent())
-    #         if(node.getParent().getRight()==node):
-    #             node.getParent().setRight(new_node)
-    #         if (node.getParent().getLeft() == node):
-    #             node.getParent().setLeft(new_node)
-    #         node.setParent(None)
-    #     if (node.getLeft().isRealNode() == False):
-    #         new_node = node.getRight()
-    #         new_node.setParent(node.getParent())
-    #         if (node.getParent().getRight() == node):
-    #             node.getParent().setRight(new_node)
-    #         if (node.getParent().getLeft() == node):
-    #             node.getParent().setLeft(new_node)
-    #         node.setParent(None)
+    def delete(self, i):
+        if(i>=self.size or i<0):
+            return -1
+        node = self.retrieve(i)
+        # if (node is None):
+        #     return -1
+        if(node.getRight().isRealNode()==False and node.getLeft().isRealNode()==False):
+            if(self.root != node):
+                if (node.getParent().getRight() == node):
+                    node.getParent().setRight(node.getRight())
+                if (node.getParent().getLeft() == node):
+                    node.getParent().setLeft(node.getRight())
+            else:
+                self.size = 0
+                self.root = None
+                self.first = None
+                self.last = None
+        elif(node.getRight().isRealNode()==True and node.getLeft().isRealNode()==True):
+            successor = self.successor(node)
+            self.switch_nodes(successor, node)
+            self.delete(node)
+        elif(node.getRight().isRealNode()==False):
+            new_node = node.getLeft()
+            new_node.setParent(node.getParent())
+            if(self.root!= node):
+                if (node.getParent().getRight() == node):
+                    node.getParent().setRight(new_node)
+                if (node.getParent().getLeft() == node):
+                    node.getParent().setLeft(new_node)
+            else:
+                self.root=new_node
+        elif (node.getLeft().isRealNode() == False):
+            new_node = node.getRight()
+            new_node.setParent(node.getParent())
+            if(self.root!=node):
+                if (node.getParent().getRight() == node):
+                    node.getParent().setRight(new_node)
+                if (node.getParent().getLeft() == node):
+                    node.getParent().setLeft(new_node)
+            else:
+                self.root=new_node
+        self.maintain_AVL(node.getParent())
+
+    def switch_node(self, x, y):
+        if (self.root == x or self.root == y):
+            root = y if self.root == x else x
+            self.setRoot(root)
+        temp = AVLNode()
+        temp.copy_from(x)
+        x.copy_frorm(y)
+        y.copy_from(temp)
 
 
     """returns the value of the first item in the list
@@ -515,6 +545,7 @@ class AVLTreeList(object):
             while (x != self.getRoot() and x == x.parent.left):
                 x = x.parent
             return x.parent
+
 
 
 def printTree(node, level=0):

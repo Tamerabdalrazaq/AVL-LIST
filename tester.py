@@ -117,7 +117,7 @@ def test_rotation():
 def test_2():
     tree=AVLTreeList()
     list = []
-    n =10
+    n =20
     tree.insert(0, 0)
     list.insert(0, 0)
     for i in range(0, n):
@@ -144,13 +144,20 @@ def test_2():
             print("index: " +str(i))
             print("expected: " +str(e))
             print("returned: " +str(r))
-    
+def test_delete():
+    tree = AVLTreeList()
+    tree.insert(0,2)
+    tree.insert(0,1)
+    tree.delete(1)
+    print("************************************")
+    avl_template_new.printTree(tree.root)
 
 
 
 # test_successor_predecessor()
 # inserttest()
 #test_rotation()
-for i in range(60):
-    test_2()
-    print('***********************')
+# for i in range(60):
+#     test_2()
+#     print('***********************')
+test_delete()
