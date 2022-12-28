@@ -244,10 +244,6 @@ class AVLTreeList(object):
                 new_node.setParent(node)
                 node.setSize(node.getSize() + 1)
                 node.setLeft(new_node)
-                # print(node)
-                # print('| <-  |')
-                # print(new_node )
-                # print('----------------')
                 return self.series_of_actions(new_node)
         if (i >= node.getLeft().getSize() + 1):
             if (node.getRight().isRealNode() == False):
@@ -255,10 +251,6 @@ class AVLTreeList(object):
                 new_node.setParent(node)
                 node.setSize(node.getSize() + 1)
                 node.setRight(new_node)
-                # print(node )
-                # print('| ->  |')
-                # print(new_node)
-                # print('----------------')
                 return self.series_of_actions(new_node)
 
         if (node.getLeft().isRealNode() and i <= node.getLeft().getSize()):
@@ -270,10 +262,6 @@ class AVLTreeList(object):
             new_node.setParent(node)
             node.setSize(node.getSize() + 1)
             node.setRight(new_node)
-            # print(node )
-            # print('| ->  |')
-            # print(new_node)
-            # print('----------------')
             return self.series_of_actions(new_node)
 
         node.setSize(node.getSize() + 1)
@@ -358,7 +346,6 @@ class AVLTreeList(object):
     def rotate_left(self, n):
         newrightforparent = n.getLeft()
         parent = n.getParent()
-        parent.setHeight(parent.getHeight() - 2)
         if (parent is not None):
             n.setParent(parent.getParent())
         if (n.getParent() != None):
@@ -428,7 +415,8 @@ class AVLTreeList(object):
             else:
                 self.root = new_node
         if (node.getParent() is not None):
-            self.maintain_AVL(node.getParent())
+            return self.maintain_AVL(node.getParent())
+        return 0
 
     def switch_nodes(self, x, y):
         if (self.root == x or self.root == y):

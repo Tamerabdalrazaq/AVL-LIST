@@ -1,3 +1,4 @@
+import math
 import random
 import avl_template_new
 
@@ -117,7 +118,7 @@ def test_rotation():
 def test_2():
     tree=AVLTreeList()
     list = []
-    n =20
+    n =50
     tree.insert(0, 0)
     list.insert(0, 0)
     for i in range(0, n):
@@ -125,6 +126,11 @@ def test_2():
         print('inserting ' + str(i) + ' at ' + str(index))
         list.insert(index, i)
         tree.insert(index, i)
+    for i in range(0, math.floor(0.5*n)):
+        index = random.randrange(len(list))
+        print('inserting ' + str(i) + ' at ' + str(index))
+        list.pop(index)
+        tree.delete(index)
 
     print('__________________')
     print('__________________')
@@ -146,20 +152,69 @@ def test_2():
             print("returned: " +str(r))
 def test_delete():
     tree = AVLTreeList()
-    tree.insert(0,2)
-    tree.insert(0,1)
-    tree.insert(2,3)
-
-    tree.delete(1)
-    print("************************************")
+    tree.insert(0, 0)
+    tree.insert(0, 0)
+    tree.insert(0, 1)
+    tree.insert(0, 2)
+    tree.insert(3, 3)
+    tree.insert(2, 4)
+    tree.insert(3, 5)
+    print("************************************before delete**********")
+    avl_template_new.printTree(tree.root)
+    tree.delete(0)
+    print("************************************after delete**********")
     avl_template_new.printTree(tree.root)
 
 
+def test_delete2():
+    def _ins(index, v):
+        print('inserting ' + str(i) + ' at ' + str(index))
+        list.insert(index, v)
+        tree.insert(index , v)
+    def _del(index):
+        print('deleting ' + ' at ' + str(i))
+        list.pop(index)
+        tree.delete(index)
+    tree=AVLTreeList()
+    list = []
+    n =50
+    tree.insert(0, 0)
+    list.insert(0, 0)
+    for i in range(0, n):
+        if(len(list) == 0):
+            _ins(0, i)
+        else:
+            coin = random.randrange(8)
+            if(coin <= 5):
+                index = random.randrange(len(list))
+                _ins(index, i)
+            else:
+                index = random.randrange(len(list))
+                _del(index)
+
+    print('______')
+    print('______')
+    print('final tree:')
+    avl_template_new.printTree(tree.root)
+    print('final List:')
+    print(list)
+    print('______')
+    print('______')
+
+    for i in range(1,len(list)):
+        expected = list[i]
+        returned = tree.retrieve(i).value
+        assert (list[i] == tree.retrieve(i).value), print_err(i, expected, returned)
+        def print_err(i, e, r):
+            print("ERROR!")
+            print("index: " +str(i))
+            print("expected: " +str(e))
+            print("returned: " +str(r))
 
 # test_successor_predecessor()
 # inserttest()
 #test_rotation()
-# for i in range(60):
+# for i in range(50):
 #     test_2()
 #     print('***********************')
-test_delete()
+test_delete2()
