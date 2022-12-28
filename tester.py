@@ -148,6 +148,7 @@ def test_delete():
     tree = AVLTreeList()
     tree.insert(0,2)
     tree.insert(0,1)
+    tree.insert(2,3)
 
     tree.delete(1)
     print("************************************")
