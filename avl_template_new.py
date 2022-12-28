@@ -276,7 +276,6 @@ class AVLTreeList(object):
         return numofrot
 
     def maintain_AVL(self, new_node):
-        print("Inserted " + str(new_node.getValue()))
         #n = new_node.getParent()
         n=new_node
         numofrot = 0
@@ -289,7 +288,6 @@ class AVLTreeList(object):
             BF = n.getBF()
             if (abs(BF) == 2):
                 numofrot = self.rotate(n, BF)
-            print("changing size for " + str(n.getValue()))
             n.setSize(n.getLeft().getSize() + n.getRight().getSize() + 1)
             n.setHeight((max(n.getLeft().getHeight(), n.getRight().getHeight()) + 1))
             if (n == self.root):
@@ -298,8 +296,6 @@ class AVLTreeList(object):
         return numofrot
 
     def rotate(self, n, BF):
-        c = 0
-        print("Rotating " + str(n.getValue()) + " With BF: " + str(BF))
         if (BF == -2):
             if (n.getRight().getBF() == -1 or n.getRight().getBF() == 0):
                 if (self.getRoot() == n):
@@ -421,7 +417,8 @@ class AVLTreeList(object):
                     node.getParent().setLeft(new_node)
             else:
                 self.root=new_node
-        self.maintain_AVL(node.getParent())
+        if(node.getParent() is not None):
+            self.maintain_AVL(node.getParent())
 
     def switch_node(self, x, y):
         if (self.root == x or self.root == y):

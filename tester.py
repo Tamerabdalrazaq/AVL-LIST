@@ -148,6 +148,7 @@ def test_delete():
     tree = AVLTreeList()
     tree.insert(0,2)
     tree.insert(0,1)
+
     tree.delete(1)
     print("************************************")
     avl_template_new.printTree(tree.root)
