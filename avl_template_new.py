@@ -234,7 +234,7 @@ class AVLTreeList(object):
 
         numofrot = self.insert_rec(self.root, i, val)
         self.size += 1
-        printTree(self.root)
+        #printTree(self.root)
         return numofrot
 
     def insert_rec(self, node, i, val):
@@ -414,6 +414,7 @@ class AVLTreeList(object):
                     node.getParent().setLeft(new_node)
             else:
                 self.root = new_node
+        self.size-=1
         if (node.getParent() is not None):
             return self.maintain_AVL(node.getParent())
         return 0
@@ -426,7 +427,7 @@ class AVLTreeList(object):
         temp.copy_from(x)
         x.copy_from(y)
         y.copy_from(temp)
-        printTree(self.root)
+        #printTree(self.root)
 
     """returns the value of the first item in the list
 
@@ -491,8 +492,53 @@ class AVLTreeList(object):
     """
 
     def concat(self, lst):
-        return None
+        h1=self.root.getHeight()
+        h2=lst.root.getHeight()
+        h=min(h1,h2)
+        res=0
+        goleft=True
+        node=lst.root
+        indextodelete = self.size
+        if(h1>h2):
+            goleft=False
+            node=self.root
+        while(node.getHeight()>h):
+            if(goleft==True):
+                node=node.getLeft()
+            else:
+                node=node.getRight()
+        newnode=AVLNode("todelete")
+        if(goleft==True):
+            newnode.setLeft(self.root)
+            newnode.setRight(node)
+            newnode.setParent(node.getParent())
+            if(node.getParent() is not  None):
+                node.getParent().setLeft(newnode)
+            node.setParent(newnode)
+        else:
+            indextodelete = self.size-node.getRight().getSize()
+            newnode.setRight(lst.root)
+            newnode.setLeft(node)
+            newnode.setParent(node.getParent())
+            if (node.getParent() is not None):
+                node.getParent().setRight(newnode)
+            node.setParent(newnode)
+        newnode.setHeight(h+1)
+        newnode.setSize(newnode.getLeft().getSize()+newnode.getRight().getSize()+1)
+        self.size+=(lst.size+1)
+        self.updateroot(newnode)
+        if(newnode.getParent() is not  None and abs(newnode.getParent().getBF())>1):
+            res=abs(newnode.getParent().getBF())
+            self.maintain_AVL(newnode)
+        print(indextodelete)
+        self.delete(indextodelete)
+        return res
 
+
+    def updateroot(self,node):
+        while node.getParent() is not None:
+            node=node.getParent()
+        self.setRoot(node)
     """searches for a *value* in the list
 
     @type val: str
