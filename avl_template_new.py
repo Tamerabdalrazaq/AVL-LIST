@@ -174,11 +174,12 @@ class AVLTreeList(object):
     def __init__(self):
         self.size = 0
         self.root = None
-        self.first = None
-        self.last = None
+        self.first_node = None
+        self.last_node = None
 
     # add your fields here
     def getSize(self):
+        if(self.root is None): return 0
         return self.root.getSize()
 
     def setSize(self, size):
@@ -232,39 +233,40 @@ class AVLTreeList(object):
     # UNFINISHED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # TODO: Re-arrange functions structure
     def insert(self, i, val):
-        if (self.size == 0):
-            node = create_leaf(val)
-            self.root = node
+        new_node = create_leaf(val)
+        if i == 0:
+            self.first_node = new_node
+        if (i == self.getSize()):
+            self.last_node = new_node
+        if (self.root is None):
+            self.root = new_node
             self.size += 1
             return 0
 
-        numofrot = self.insert_rec(self.root, i, val)
+        numofrot = self.insert_rec(self.root, i, new_node)
         self.size += 1
         # printTree(self.root)
         return numofrot
 
-    def insert_rec(self, node, i, val):
+    def insert_rec(self, node, i, new_node):
         if (i == 0):
             if (node.getLeft().isRealNode() == False):
-                new_node = create_leaf(val)
                 new_node.setParent(node)
                 node.setSize(node.getSize() + 1)
                 node.setLeft(new_node)
                 return self.series_of_actions(new_node)
         if (i >= node.getLeft().getSize() + 1):
             if (node.getRight().isRealNode() == False):
-                new_node = create_leaf(val)
                 new_node.setParent(node)
                 node.setSize(node.getSize() + 1)
                 node.setRight(new_node)
                 return self.series_of_actions(new_node)
 
         if (node.getLeft().isRealNode() and i <= node.getLeft().getSize()):
-            return self.insert_rec(node.getLeft(), i, val)
+            return self.insert_rec(node.getLeft(), i, new_node)
         if (node.getRight().isRealNode() and i >= node.getLeft().getSize() + 1):
-            return self.insert_rec(node.getRight(), i - (node.getLeft().size + 1), val)
+            return self.insert_rec(node.getRight(), i - (node.getLeft().size + 1), new_node)
         if (node.getRight().isRealNode() == False and i >= node.getLeft().getSize() + 1):
-            new_node = create_leaf(val)
             new_node.setParent(node)
             node.setSize(node.getSize() + 1)
             node.setRight(new_node)
@@ -383,6 +385,10 @@ class AVLTreeList(object):
         if (i >= self.size or i < 0):
             return -1
         node = self.retrieve(i)
+        if(i == 0):
+            self.first_node = self.successor(node)
+        if(i == self.getSize() - 1):
+            self.last_node = self.predecessor(node)
         # if (node is None):
         #     return -1
         if (node.getRight().isRealNode() == False and node.getLeft().isRealNode() == False):
@@ -442,7 +448,7 @@ class AVLTreeList(object):
     """
 
     def first(self):
-        return None
+        return self.first
 
     """returns the value of the last item in the list
 
@@ -451,7 +457,7 @@ class AVLTreeList(object):
     """
 
     def last(self):
-        return None
+        return self.last
 
     """returns an array representing list 
 

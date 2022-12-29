@@ -133,7 +133,7 @@ def test_2():
         print('inserting ' + str(i) + ' at ' + str(index))
         list.pop(index)
         tree.delete(index)
-    return tree,list
+    # return tree,list
 
     print('__________________')
     print('__________________')
@@ -213,6 +213,8 @@ def test_delete2(_list, _tree, n):
             print("index: " +str(i))
             print("expected: " +str(e))
             print("returned: " +str(r))
+    assert tree.last_node.value == list[-1]
+    assert tree.first_node.value == list[0]
 
 def test_concat():
     x=test_2()
@@ -258,12 +260,11 @@ def test_arrayToList():
 # test_successor_predecessor()
 # inserttest()
 # test_rotation()
-for i in range(50):
-    test_2()
-    print('***********************')
+# for i in range(50):
+#     test_2()
+#     print('***********************')
 
-#test_delete2()
 # test_concat()
-#test_delete2(None,None,500)
+test_delete2(None,None,5000)
 #test_arrayToList()
 
