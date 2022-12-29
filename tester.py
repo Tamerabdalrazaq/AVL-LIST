@@ -258,12 +258,12 @@ def test_arrayToList():
 # test_successor_predecessor()
 # inserttest()
 # test_rotation()
-# for i in range(50):
-#     test_2()
-#     print('***********************')
+for i in range(50):
+    test_2()
+    print('***********************')
 
 #test_delete2()
 # test_concat()
-test_delete2(None,None,500)
+#test_delete2(None,None,500)
 #test_arrayToList()
 

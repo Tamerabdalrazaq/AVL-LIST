@@ -420,7 +420,7 @@ class AVLTreeList(object):
                     node.getParent().setLeft(new_node)
             else:
                 self.root = new_node
-        #self.size -= 1
+        #self.setSize(self.getSize()-1)
         if (node.getParent() is not None):
             return self.maintain_AVL(node.getParent())
         return 0
