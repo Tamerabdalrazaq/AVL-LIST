@@ -4,6 +4,8 @@ import avl_template_new
 
 AVLNode = avl_template_new.AVLNode
 AVLTreeList = avl_template_new.AVLTreeList
+atl = avl_template_new.arrayToList
+print_tree = avl_template_new.printTree
 
 def test_successor_predecessor():
     n03 = AVLNode(3)
@@ -210,6 +212,7 @@ def test_delete2():
             print("index: " +str(i))
             print("expected: " +str(e))
             print("returned: " +str(r))
+
 def test_concat():
     tree1=AVLTreeList()
     tree2=AVLTreeList()
@@ -227,11 +230,35 @@ def test_concat():
     print("*********************************")
     tree1.concat(tree2)
     avl_template_new.printTree(tree1.root)
+    
+def test_arrayToList():
+    lst = list(range(0,100))
+    tree = atl(lst, 0, len(lst)-1, None)
+    print_tree(tree.getRoot())
+    print(tree.retrieve(6).parent)
+
+    for i in range(0,len(lst)):
+        expected = lst[i]
+        returned = tree.retrieve(i).value
+        print(expected, returned)
+        assert (lst[i] == tree.retrieve(i).value), print_err(i, expected, returned)
+        def print_err(i, e, r):
+            print("ERROR!")
+            print("index: " +str(i))
+            print("expected: " +str(e))
+            print("returned: " +str(r))
+    
+
+
 # test_successor_predecessor()
 # inserttest()
 #test_rotation()
 # for i in range(50):
 #     test_2()
 #     print('***********************')
+
 #test_delete2()
 test_concat()
+# test_delete2()
+test_arrayToList()
+
