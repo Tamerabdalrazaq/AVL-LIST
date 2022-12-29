@@ -150,7 +150,7 @@ class AVLNode(object):
         y.getRight().setParent(self)
         self.setSize(y.getSize())
         self.setHeight(y.getHeight())
-        if(y.getParent() is not None):
+        if (y.getParent() is not None):
             y.updatechildforpar(self)
 
     def updatechildforpar(self, new_node):
@@ -178,6 +178,12 @@ class AVLTreeList(object):
         self.last = None
 
     # add your fields here
+    def getSize(self):
+        return self.root.getSize()
+
+    def setSize(self, size):
+        self.root.setSize(size)
+        self.size=size
 
     """returns whether the list is empty
 
@@ -234,7 +240,7 @@ class AVLTreeList(object):
 
         numofrot = self.insert_rec(self.root, i, val)
         self.size += 1
-        #printTree(self.root)
+        # printTree(self.root)
         return numofrot
 
     def insert_rec(self, node, i, val):
@@ -414,7 +420,7 @@ class AVLTreeList(object):
                     node.getParent().setLeft(new_node)
             else:
                 self.root = new_node
-        self.size-=1
+        #self.size -= 1
         if (node.getParent() is not None):
             return self.maintain_AVL(node.getParent())
         return 0
@@ -427,7 +433,7 @@ class AVLTreeList(object):
         temp.copy_from(x)
         x.copy_from(y)
         y.copy_from(temp)
-        #printTree(self.root)
+        # printTree(self.root)
 
     """returns the value of the first item in the list
 
@@ -492,53 +498,53 @@ class AVLTreeList(object):
     """
 
     def concat(self, lst):
-        h1=self.root.getHeight()
-        h2=lst.root.getHeight()
-        h=min(h1,h2)
-        res=0
-        goleft=True
-        node=lst.root
-        indextodelete = self.size
-        if(h1>h2):
-            goleft=False
-            node=self.root
-        while(node.getHeight()>h):
-            if(goleft==True):
-                node=node.getLeft()
+        h1 = self.root.getHeight()
+        h2 = lst.root.getHeight()
+        h = min(h1, h2)
+        res = 0
+        goleft = True
+        node = lst.root
+        indextodelete = self.getSize()
+        if (h1 > h2):
+            goleft = False
+            node = self.root
+        while (node.getHeight() > h):
+            if (goleft == True):
+                node = node.getLeft()
             else:
-                node=node.getRight()
-        newnode=AVLNode("todelete")
-        if(goleft==True):
+                node = node.getRight()
+        newnode = AVLNode("todelete")
+        if (goleft == True):
             newnode.setLeft(self.root)
             newnode.setRight(node)
             newnode.setParent(node.getParent())
-            if(node.getParent() is not  None):
+            if (node.getParent() is not None):
                 node.getParent().setLeft(newnode)
             node.setParent(newnode)
         else:
-            indextodelete = self.size-node.getRight().getSize()
+            indextodelete = self.getSize() - node.getRight().getSize()
             newnode.setRight(lst.root)
             newnode.setLeft(node)
             newnode.setParent(node.getParent())
             if (node.getParent() is not None):
                 node.getParent().setRight(newnode)
             node.setParent(newnode)
-        newnode.setHeight(h+1)
-        newnode.setSize(newnode.getLeft().getSize()+newnode.getRight().getSize()+1)
-        self.size+=(lst.size+1)
+        newnode.setHeight(h + 1)
+        newnode.setSize(newnode.getLeft().getSize() + newnode.getRight().getSize() + 1)
         self.updateroot(newnode)
-        if(newnode.getParent() is not  None and abs(newnode.getParent().getBF())>1):
-            res=abs(newnode.getParent().getBF())
+        self.setSize(self.getSize() + lst.getSize() + 1)
+        if (newnode.getParent() is not None and abs(newnode.getParent().getBF()) > 1):
+            res = abs(newnode.getParent().getBF())
             self.maintain_AVL(newnode)
         print(indextodelete)
         self.delete(indextodelete)
         return res
 
-
-    def updateroot(self,node):
+    def updateroot(self, node):
         while node.getParent() is not None:
-            node=node.getParent()
+            node = node.getParent()
         self.setRoot(node)
+
     """searches for a *value* in the list
 
     @type val: str
@@ -610,7 +616,7 @@ def create_leaf(val):
 def arrayToList(arr, a, b, parent) -> AVLTreeList:
     tree = AVLTreeList()
     # print(str(a)+ ', ' + str(b))
-    med = (a+b)//2
+    med = (a + b) // 2
     root = create_leaf(arr[med])
     root.setParent(parent)
     tree.setRoot(root)
@@ -619,13 +625,12 @@ def arrayToList(arr, a, b, parent) -> AVLTreeList:
     if (a == b): return tree
 
     left_tree, right_tree = None, None
-    if(med > a):
-        left_tree = arrayToList(arr, max(0, a), max(med-1, 0), root)
+    if (med > a):
+        left_tree = arrayToList(arr, max(0, a), max(med - 1, 0), root)
         root.setLeft(left_tree.getRoot())
-    if(med < b):
-        right_tree = arrayToList(arr, min(med+1, len(arr)-1), min(b, len(arr)-1), root)
+    if (med < b):
+        right_tree = arrayToList(arr, min(med + 1, len(arr) - 1), min(b, len(arr) - 1), root)
         root.setRight(right_tree.getRoot())
-    
 
     h_1 = -1 if left_tree is None else left_tree.getRoot().getHeight()
     h_2 = -1 if right_tree is None else right_tree.getRoot().getHeight()
@@ -633,7 +638,7 @@ def arrayToList(arr, a, b, parent) -> AVLTreeList:
     s_2 = 0 if right_tree is None else right_tree.size
 
     root.setSize(s_1 + s_2 + 1)
-    root.setHeight(max(h_1, h_2 ) + 1)
+    root.setHeight(max(h_1, h_2) + 1)
     tree.size = s_1 + s_2 + 1
 
     return tree

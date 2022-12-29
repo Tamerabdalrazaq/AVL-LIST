@@ -120,7 +120,7 @@ def test_rotation():
 def test_2():
     tree=AVLTreeList()
     list = []
-    n =50
+    n =40
     tree.insert(0, 0)
     list.insert(0, 0)
     for i in range(0, n):
@@ -133,6 +133,7 @@ def test_2():
         print('inserting ' + str(i) + ' at ' + str(index))
         list.pop(index)
         tree.delete(index)
+    return tree,list
 
     print('__________________')
     print('__________________')
@@ -214,22 +215,24 @@ def test_delete2(_list, _tree, n):
             print("returned: " +str(r))
 
 def test_concat():
-    tree1=AVLTreeList()
-    tree2=AVLTreeList()
-    tree1.insert(0,1)
-    tree1.insert(0,2)
-    tree1.insert(2,3)
-    tree1.insert(0,10)
+    x=test_2()
+    y=test_2()
+    tree1=x[0]
+    list1=x[1]
+    tree2=y[0]
+    list2=y[1]
     print("*********************************")
     avl_template_new.printTree(tree1.root)
-    tree2.insert(0,4)
-    tree2.insert(0, 5)
-    tree2.insert(2,6)
+    print(list1)
+    print(tree1.getSize())
     print("*********************************")
     avl_template_new.printTree(tree2.root)
+    print(list2)
+    print(tree2.getSize())
     print("*********************************")
     tree1.concat(tree2)
     avl_template_new.printTree(tree1.root)
+    test_delete2(list1+list2,tree1,20)
     
 def test_arrayToList():
     lst = list(range(0,100))
@@ -254,13 +257,13 @@ def test_arrayToList():
 
 # test_successor_predecessor()
 # inserttest()
-#test_rotation()
+# test_rotation()
 # for i in range(50):
 #     test_2()
 #     print('***********************')
 
 #test_delete2()
-test_concat()
-# test_delete2()
-test_arrayToList()
+# test_concat()
+test_delete2(None,None,500)
+#test_arrayToList()
 
