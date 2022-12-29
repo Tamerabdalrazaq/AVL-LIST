@@ -213,7 +213,24 @@ def test_delete2():
             print("expected: " +str(e))
             print("returned: " +str(r))
 
-
+def test_concat():
+    tree1=AVLTreeList()
+    tree2=AVLTreeList()
+    tree1.insert(0,1)
+    tree1.insert(0,2)
+    tree1.insert(2,3)
+    tree1.insert(0,10)
+    print("*********************************")
+    avl_template_new.printTree(tree1.root)
+    tree2.insert(0,4)
+    tree2.insert(0, 5)
+    tree2.insert(2,6)
+    print("*********************************")
+    avl_template_new.printTree(tree2.root)
+    print("*********************************")
+    tree1.concat(tree2)
+    avl_template_new.printTree(tree1.root)
+    
 def test_arrayToList():
     lst = list(range(0,100))
     tree = atl(lst, 0, len(lst)-1, None)
@@ -232,11 +249,16 @@ def test_arrayToList():
             print("returned: " +str(r))
     
 
+
 # test_successor_predecessor()
 # inserttest()
 #test_rotation()
 # for i in range(50):
 #     test_2()
 #     print('***********************')
+
+#test_delete2()
+test_concat()
 # test_delete2()
 test_arrayToList()
+
