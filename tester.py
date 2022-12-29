@@ -213,6 +213,7 @@ def test_delete2(_list, _tree, n):
             print("index: " +str(i))
             print("expected: " +str(e))
             print("returned: " +str(r))
+    
     assert tree.last_node.value == list[-1]
     assert tree.first_node.value == list[0]
 
