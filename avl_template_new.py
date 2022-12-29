@@ -559,3 +559,35 @@ def create_leaf(val):
     leaf.left = l_virtual
     leaf.setHeight(0)
     return leaf
+
+
+def arrayToList(arr, a, b, parent) -> AVLTreeList:
+    tree = AVLTreeList()
+    # print(str(a)+ ', ' + str(b))
+    med = (a+b)//2
+    root = create_leaf(arr[med])
+    root.setParent(parent)
+    tree.setRoot(root)
+    tree.size = 1
+
+    if (a == b): return tree
+
+    left_tree, right_tree = None, None
+    if(med > a):
+        left_tree = arrayToList(arr, max(0, a), max(med-1, 0), root)
+        root.setLeft(left_tree.getRoot())
+    if(med < b):
+        right_tree = arrayToList(arr, min(med+1, len(arr)-1), min(b, len(arr)-1), root)
+        root.setRight(right_tree.getRoot())
+    
+
+    h_1 = -1 if left_tree is None else left_tree.getRoot().getHeight()
+    h_2 = -1 if right_tree is None else right_tree.getRoot().getHeight()
+    s_1 = 0 if left_tree is None else left_tree.size
+    s_2 = 0 if right_tree is None else right_tree.size
+
+    root.setSize(s_1 + s_2 + 1)
+    root.setHeight(max(h_1, h_2 ) + 1)
+    tree.size = s_1 + s_2 + 1
+
+    return tree
