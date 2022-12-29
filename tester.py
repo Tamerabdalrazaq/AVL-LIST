@@ -120,7 +120,7 @@ def test_rotation():
 def test_2():
     tree=AVLTreeList()
     list = []
-    n =40
+    n =60
     tree.insert(0, 0)
     list.insert(0, 0)
     for i in range(0, n):
@@ -133,7 +133,6 @@ def test_2():
         print('inserting ' + str(i) + ' at ' + str(index))
         list.pop(index)
         tree.delete(index)
-    return tree,list
 
     print('__________________')
     print('__________________')
@@ -153,6 +152,7 @@ def test_2():
             print("index: " +str(i))
             print("expected: " +str(e))
             print("returned: " +str(r))
+    return tree, list
 def test_delete():
     tree = AVLTreeList()
     tree.insert(0, 0)
@@ -232,7 +232,7 @@ def test_concat():
     print("*********************************")
     tree1.concat(tree2)
     avl_template_new.printTree(tree1.root)
-    test_delete2(list1+list2,tree1,20)
+    test_delete2(list1+list2,tree1,40)
     
 def test_arrayToList():
     lst = list(range(0,100))
@@ -263,7 +263,7 @@ for i in range(50):
     print('***********************')
 
 #test_delete2()
-# test_concat()
+test_concat()
 #test_delete2(None,None,500)
 #test_arrayToList()
 
