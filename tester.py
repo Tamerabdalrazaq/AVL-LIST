@@ -168,7 +168,7 @@ def test_delete():
     avl_template_new.printTree(tree.root)
 
 
-def test_delete2():
+def test_delete2(_list, _tree, n):
     def _ins(index, v):
         print('inserting ' + str(i) + ' at ' + str(index))
         list.insert(index, v)
@@ -177,11 +177,11 @@ def test_delete2():
         print('deleting ' + ' at ' + str(i))
         list.pop(index)
         tree.delete(index)
-    tree=AVLTreeList()
-    list = []
-    n =50
-    tree.insert(0, 0)
-    list.insert(0, 0)
+    tree=AVLTreeList() if _tree is None else _tree
+    list = [] if _list is None else _list
+    if(_list is None):
+        tree.insert(0, 0)
+        list.insert(0, 0)
     for i in range(0, n):
         if(len(list) == 0):
             _ins(0, i)
@@ -230,6 +230,8 @@ def test_arrayToList():
             print("index: " +str(i))
             print("expected: " +str(e))
             print("returned: " +str(r))
+    test_delete2(lst, tree, 200)
+
     
 
 # test_successor_predecessor()
