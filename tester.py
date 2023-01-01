@@ -133,7 +133,6 @@ def test_2():
         print('inserting ' + str(i) + ' at ' + str(index))
         list.pop(index)
         tree.delete(index)
-    # return tree,list
 
     print('__________________')
     print('__________________')
@@ -213,7 +212,8 @@ def test_delete2(_list, _tree, n):
             print("index: " +str(i))
             print("expected: " +str(e))
             print("returned: " +str(r))
-    
+
+    print(tree.last())
     assert tree.last().value == list[-1]
     assert tree.first().value == list[0]
 
@@ -235,7 +235,7 @@ def test_concat():
     print("*********************************")
     tree1.concat(tree2)
     avl_template_new.printTree(tree1.root)
-    test_delete2(list1+list2,tree1,20)
+    test_delete2(list1+list2,tree1,200)
     
 def test_arrayToList():
     lst = list(range(0,100))
@@ -265,7 +265,7 @@ def test_arrayToList():
 #     test_2()
 #     print('***********************')
 
-# test_concat()
+test_concat()
 test_delete2(None,None,5000)
 #test_arrayToList()
 
