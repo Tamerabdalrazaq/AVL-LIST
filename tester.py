@@ -200,7 +200,7 @@ def test_concat():
     
 def test_arrayToList():
     lst = list(range(0,100))
-    tree = atl(lst, 0, len(lst)-1, None)
+    tree = atl(lst)
     print_tree(tree.getRoot())
     print(tree.retrieve(6).parent)
 
@@ -238,6 +238,10 @@ def test_sorting():
     print_tree(tree.getRoot())
     print('After: ')
     print_tree(sortedlist.getRoot())
+    print(sortedlist.getRoot())
+    print(sorted(arr))
+    print(sortedlist.listToArray())
+    assert (sorted(arr) == sortedlist.listToArray())
     assert sortedlist.getSize() == tree.getSize()
 
 
@@ -253,7 +257,7 @@ test_concat()
 # test_concat()
 # for i in range(20):
 #     test_delete2(None,None,50)
-#test_arrayToList()
+# test_arrayToList()
 # for i in range(20): 
 #   test_listToArray()
 # for i in range(20):
