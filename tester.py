@@ -232,7 +232,7 @@ def test_permutations():
     assert shuffled.getSize() == tree.getSize()
     
 def test_sorting():
-    tree, arr = create_list_tree(20)
+    tree, arr = create_list_tree(70)
     sortedlist = tree.sort()
     print('Before: ')
     print_tree(tree.getRoot())
@@ -248,7 +248,7 @@ def test_sorting():
 #     test_2()
 #     print('***********************')
 
-# test_concat()
+test_concat()
 # test_insert_delete(None,None,5000)
 # test_concat()
 # for i in range(20):
@@ -258,5 +258,5 @@ def test_sorting():
 #   test_listToArray()
 # for i in range(20):
 #     test_permutations()
-for i in range(20):
+for i in range(200):
     test_sorting()

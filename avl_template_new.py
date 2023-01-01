@@ -677,30 +677,13 @@ def arrayToList(arr, a, b, parent) -> AVLTreeList:
     return tree
 
 def arraySort(arr):
-    # left=arr[0]
-    # n=len(arr)
-    # right=arr[n-1]
-    # mid=(left+right)/2
     if len(arr) > 1:
-
-        # Finding the mid of the array
         mid = len(arr) // 2
-
-        # Dividing the array elements
         L = arr[:mid]
-
-        # into 2 halves
         R = arr[mid:]
-
-        # Sorting the first half
         arraySort(L)
-
-        # Sorting the second half
         arraySort(R)
-
         i = j = k = 0
-
-        # Copy data to temp arrays L[] and R[]
         while i < len(L) and j < len(R):
             if L[i] <= R[j]:
                 arr[k] = L[i]
@@ -710,7 +693,6 @@ def arraySort(arr):
                 j += 1
             k += 1
 
-        # Checking if any element was left
         while i < len(L):
             arr[k] = L[i]
             i += 1
