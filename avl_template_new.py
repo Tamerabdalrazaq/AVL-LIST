@@ -448,7 +448,7 @@ class AVLTreeList(object):
     """
 
     def first(self):
-        return self.first
+        return self.first_node
 
     """returns the value of the last item in the list
 
@@ -457,7 +457,7 @@ class AVLTreeList(object):
     """
 
     def last(self):
-        return self.last
+        return self.last_node
 
     """returns an array representing list 
 

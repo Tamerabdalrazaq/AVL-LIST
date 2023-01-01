@@ -214,8 +214,8 @@ def test_delete2(_list, _tree, n):
             print("expected: " +str(e))
             print("returned: " +str(r))
     
-    assert tree.last_node.value == list[-1]
-    assert tree.first_node.value == list[0]
+    assert tree.last().value == list[-1]
+    assert tree.first().value == list[0]
 
 def test_concat():
     x=test_2()
