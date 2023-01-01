@@ -173,7 +173,8 @@ def test_insert_delete(_list, _tree, n):
             print("index: " +str(i))
             print("expected: " +str(e))
             print("returned: " +str(r))
-    
+
+    print(tree.last())
     assert tree.last().value == list[-1]
     assert tree.first().value == list[0]
 
@@ -239,6 +240,8 @@ def test_permutations():
 #     test_2()
 #     print('***********************')
 
+test_concat()
+test_insert_delete(None,None,5000)
 # test_concat()
 # for i in range(20):
 #     test_delete2(None,None,50)
