@@ -1,3 +1,4 @@
+import random
 # username - complete info
 # id1      - complete info
 # name1    - complete info
@@ -400,8 +401,8 @@ class AVLTreeList(object):
             else:
                 self.size = 0
                 self.root = None
-                self.first = None
-                self.last = None
+                self.first_node = None
+                self.last_node = None
         elif (node.getRight().isRealNode() == True and node.getLeft().isRealNode() == True):
             successor = self.successor(node)
             self.switch_nodes(successor, node)
@@ -466,7 +467,12 @@ class AVLTreeList(object):
     """
 
     def listToArray(self):
-        return None
+        arr = []
+        x = self.first()
+        while(x is not None):
+            arr.append(x.getValue())
+            x = self.successor(x)
+        return arr
 
     """returns the size of the list 
 
@@ -493,7 +499,15 @@ class AVLTreeList(object):
     """
 
     def permutation(self):
-        return None
+        n = self.getSize()
+        arr = self.listToArray()
+        for i in range(n):
+            rand = random.randrange(n)
+            temp = arr[rand]
+            arr[rand] = arr[i]
+            arr[i] = temp
+        tree = arrayToList(arr, 0, n-1, None)
+        return tree
 
     """concatenates lst to self
 
@@ -576,6 +590,7 @@ class AVLTreeList(object):
 
     # TODO: Handle min, max  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     def successor(self, node):
+        if (node == self.last()): return None
         if (node.right.isRealNode()):
             x = node.right
             while (x.left.isRealNode()):
@@ -588,6 +603,7 @@ class AVLTreeList(object):
             return x.parent
 
     def predecessor(self, node):
+        if (node == self.first()): return None
         if (node.left.isRealNode()):
             x = node.left
             while (x.right.isRealNode()):

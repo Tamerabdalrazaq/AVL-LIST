@@ -216,18 +216,19 @@ def test_arrayToList():
     test_insert_delete(lst, tree, 200)
 
 def test_listToArray():
-    tree, arr = test_2()
+    tree, arr = create_list_tree(20)
     _arr = tree.listToArray()
     assert arr == _arr
     
 
 def test_permutations():
-    tree, arr = test_2(20)
+    tree, arr = create_list_tree(20)
     shuffled = tree.permutation()
     print('Before: ')
     print_tree(tree.getRoot())
     print('After: ')
     print_tree(shuffled.getRoot())
+    assert shuffled.getSize() == tree.getSize()
     
 
 
