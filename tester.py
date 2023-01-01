@@ -117,10 +117,9 @@ def test_rotation():
     avl_template_new.printTree(tree.getRoot())
     print(tree.getRoot().getLeft().isRealNode())
 
-def test_2():
+def create_list_tree(n):
     tree=AVLTreeList()
     list = []
-    n =40
     tree.insert(0, 0)
     list.insert(0, 0)
     for i in range(0, n):
@@ -128,47 +127,9 @@ def test_2():
         print('inserting ' + str(i) + ' at ' + str(index))
         list.insert(index, i)
         tree.insert(index, i)
-    for i in range(0, math.floor(0.5*n)):
-        index = random.randrange(len(list))
-        print('inserting ' + str(i) + ' at ' + str(index))
-        list.pop(index)
-        tree.delete(index)
+    return tree,list
 
-    print('__________________')
-    print('__________________')
-    print('final tree:')
-    avl_template_new.printTree(tree.root)
-    print('final List:')
-    print(list)
-    print('__________________')
-    print('__________________')
-
-    for i in range(1,len(list)):
-        expected = list[i]
-        returned = tree.retrieve(i).value
-        assert (list[i] == tree.retrieve(i).value), print_err(i, expected, returned)
-        def print_err(i, e, r):
-            print("ERROR!")
-            print("index: " +str(i))
-            print("expected: " +str(e))
-            print("returned: " +str(r))
-def test_delete():
-    tree = AVLTreeList()
-    tree.insert(0, 0)
-    tree.insert(0, 0)
-    tree.insert(0, 1)
-    tree.insert(0, 2)
-    tree.insert(3, 3)
-    tree.insert(2, 4)
-    tree.insert(3, 5)
-    print("************************************before delete**********")
-    avl_template_new.printTree(tree.root)
-    tree.delete(0)
-    print("************************************after delete**********")
-    avl_template_new.printTree(tree.root)
-
-
-def test_delete2(_list, _tree, n):
+def test_insert_delete(_list, _tree, n):
     def _ins(index, v):
         print('inserting ' + str(i) + ' at ' + str(index))
         list.insert(index, v)
@@ -218,8 +179,8 @@ def test_delete2(_list, _tree, n):
     assert tree.first().value == list[0]
 
 def test_concat():
-    x=test_2()
-    y=test_2()
+    x=create_list_tree(15)
+    y=create_list_tree(15)
     tree1=x[0]
     list1=x[1]
     tree2=y[0]
@@ -235,7 +196,7 @@ def test_concat():
     print("*********************************")
     tree1.concat(tree2)
     avl_template_new.printTree(tree1.root)
-    test_delete2(list1+list2,tree1,200)
+    test_insert_delete(list1+list2,tree1,20)
     
 def test_arrayToList():
     lst = list(range(0,100))
@@ -253,8 +214,21 @@ def test_arrayToList():
             print("index: " +str(i))
             print("expected: " +str(e))
             print("returned: " +str(r))
-    test_delete2(lst, tree, 200)
+    test_insert_delete(lst, tree, 200)
 
+def test_listToArray():
+    tree, arr = create_list_tree(20)
+    _arr = tree.listToArray()
+    assert arr == _arr
+    
+
+def test_permutations():
+    tree, arr = create_list_tree(20)
+    shuffled = tree.permutation()
+    print('Before: ')
+    print_tree(tree.getRoot())
+    print('After: ')
+    print_tree(shuffled.getRoot())
     
 
 
@@ -266,6 +240,12 @@ def test_arrayToList():
 #     print('***********************')
 
 test_concat()
-test_delete2(None,None,5000)
+test_insert_delete(None,None,5000)
+# test_concat()
+# for i in range(20):
+#     test_delete2(None,None,50)
 #test_arrayToList()
-
+# for i in range(20): 
+#   test_listToArray()
+for i in range(20): 
+    test_permutations()
