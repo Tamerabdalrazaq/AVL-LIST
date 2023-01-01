@@ -492,7 +492,7 @@ class AVLTreeList(object):
     def sort(self):
         arr=self.listToArray()
         arraySort(arr)
-        return arrayToList(arr,0,len(arr)-1,None)
+        return arrayToList(arr)
 
     """permute the info values of the list 
 
@@ -508,7 +508,7 @@ class AVLTreeList(object):
             temp = arr[rand]
             arr[rand] = arr[i]
             arr[i] = temp
-        tree = arrayToList(arr, 0, n-1, None)
+        tree = arrayToList(arr)
         return tree
 
     """concatenates lst to self
@@ -646,7 +646,13 @@ def create_leaf(val):
     return leaf
 
 
-def arrayToList(arr, a, b, parent) -> AVLTreeList:
+def arrayToList(arr):
+    tree =  arrayToList_rec(arr, 0, len(arr) - 1, None)
+    tree.first_node = tree.retrieve(0)
+    tree.last_node = tree.retrieve(tree.getSize() - 1)
+    return tree
+
+def arrayToList_rec(arr, a, b, parent) -> AVLTreeList:
     tree = AVLTreeList()
     # print(str(a)+ ', ' + str(b))
     med = (a + b) // 2
@@ -659,10 +665,10 @@ def arrayToList(arr, a, b, parent) -> AVLTreeList:
 
     left_tree, right_tree = None, None
     if (med > a):
-        left_tree = arrayToList(arr, max(0, a), max(med - 1, 0), root)
+        left_tree = arrayToList_rec(arr, max(0, a), max(med - 1, 0), root)
         root.setLeft(left_tree.getRoot())
     if (med < b):
-        right_tree = arrayToList(arr, min(med + 1, len(arr) - 1), min(b, len(arr) - 1), root)
+        right_tree = arrayToList_rec(arr, min(med + 1, len(arr) - 1), min(b, len(arr) - 1), root)
         root.setRight(right_tree.getRoot())
 
     h_1 = -1 if left_tree is None else left_tree.getRoot().getHeight()
