@@ -229,6 +229,7 @@ def test_permutations():
     print_tree(tree.getRoot())
     print('After: ')
     print_tree(shuffled.getRoot())
+    assert shuffled.getSize() == tree.getSize()
     
 
 
