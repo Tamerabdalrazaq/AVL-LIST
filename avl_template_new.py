@@ -481,7 +481,7 @@ class AVLTreeList(object):
     """
 
     def length(self):
-        return None
+        return self.getSize()
 
     """sort the info values of the list
 
@@ -490,7 +490,9 @@ class AVLTreeList(object):
     """
 
     def sort(self):
-        return None
+        arr=self.listToArray()
+        arraySort(arr)
+        return arrayToList(arr,0,len(arr)-1,None)
 
     """permute the info values of the list 
 
@@ -541,6 +543,7 @@ class AVLTreeList(object):
             if (node.getParent() is not None):
                 node.getParent().setLeft(newnode)
             node.setParent(newnode)
+            self.last_node=lst.last()
         else:
             indextodelete = self.getSize() - node.getRight().getSize()
             newnode.setRight(lst.root)
@@ -549,6 +552,7 @@ class AVLTreeList(object):
             if (node.getParent() is not None):
                 node.getParent().setRight(newnode)
             node.setParent(newnode)
+            self.first_node=lst.first()
         newnode.setHeight(h + 1)
         newnode.setSize(newnode.getLeft().getSize() + newnode.getRight().getSize() + 1)
         self.updateroot(newnode)
@@ -556,7 +560,7 @@ class AVLTreeList(object):
         if (newnode.getParent() is not None and abs(newnode.getParent().getBF()) > 1):
             res = abs(newnode.getParent().getBF())
             self.maintain_AVL(newnode)
-        print(indextodelete)
+        #print(indextodelete)
         self.delete(indextodelete)
         return res
 
@@ -574,7 +578,14 @@ class AVLTreeList(object):
     """
 
     def search(self, val):
-        return None
+        node=self.first_node
+        i=0
+        while (node is not None):
+            if(node.getValue()==val):
+                return i
+            node=self.successor(node)
+            i+=1
+        return -1
 
     """returns the root of the tree representing the list
 
@@ -664,3 +675,49 @@ def arrayToList(arr, a, b, parent) -> AVLTreeList:
     tree.size = s_1 + s_2 + 1
 
     return tree
+
+def arraySort(arr):
+    # left=arr[0]
+    # n=len(arr)
+    # right=arr[n-1]
+    # mid=(left+right)/2
+    if len(arr) > 1:
+
+        # Finding the mid of the array
+        mid = len(arr) // 2
+
+        # Dividing the array elements
+        L = arr[:mid]
+
+        # into 2 halves
+        R = arr[mid:]
+
+        # Sorting the first half
+        arraySort(L)
+
+        # Sorting the second half
+        arraySort(R)
+
+        i = j = k = 0
+
+        # Copy data to temp arrays L[] and R[]
+        while i < len(L) and j < len(R):
+            if L[i] <= R[j]:
+                arr[k] = L[i]
+                i += 1
+            else:
+                arr[k] = R[j]
+                j += 1
+            k += 1
+
+        # Checking if any element was left
+        while i < len(L):
+            arr[k] = L[i]
+            i += 1
+            k += 1
+
+        while j < len(R):
+            arr[k] = R[j]
+            j += 1
+            k += 1
+

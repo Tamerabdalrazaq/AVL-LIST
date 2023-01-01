@@ -231,6 +231,14 @@ def test_permutations():
     print_tree(shuffled.getRoot())
     assert shuffled.getSize() == tree.getSize()
     
+def test_sorting():
+    tree, arr = create_list_tree(20)
+    sortedlist = tree.sort()
+    print('Before: ')
+    print_tree(tree.getRoot())
+    print('After: ')
+    print_tree(sortedlist.getRoot())
+    assert sortedlist.getSize() == tree.getSize()
 
 
 # test_successor_predecessor()
@@ -240,13 +248,15 @@ def test_permutations():
 #     test_2()
 #     print('***********************')
 
-test_concat()
-test_insert_delete(None,None,5000)
+# test_concat()
+# test_insert_delete(None,None,5000)
 # test_concat()
 # for i in range(20):
 #     test_delete2(None,None,50)
 #test_arrayToList()
 # for i in range(20): 
 #   test_listToArray()
-for i in range(20): 
-    test_permutations()
+# for i in range(20):
+#     test_permutations()
+for i in range(20):
+    test_sorting()
