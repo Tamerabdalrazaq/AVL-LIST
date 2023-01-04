@@ -178,6 +178,8 @@ class AVLTreeList(object):
         self.first_node = None
         self.last_node = None
 
+    def getTreeHeight(self):
+        return self.getRoot().getHeight()
     # add your fields here
     def getSize(self):
         if(self.root is None): return 0
@@ -275,7 +277,9 @@ class AVLTreeList(object):
 
         node.setSize(node.getSize() + 1)
 
-    # TODO need to split to height, more actions...
+    
+    def append(self, val):
+        self.insert(self.length(), val)
 
     def series_of_actions(self, new_node):
         numofrot = self.maintain_AVL(new_node)
@@ -286,11 +290,7 @@ class AVLTreeList(object):
         n = new_node
         numofrot = 0
         while (True):
-            # x = n.getLeft().getHeight()
-            # y = n.getRight().getHeight()
-            # height_changed = max(x, y) + 1 != n.getHeight()
-            # if (height_changed):
-            #     n.setHeight(max(x, y) + 1)
+            assert n.getBF() < 3
             BF = n.getBF()
             if (abs(BF) == 2):
                 numofrot = self.rotate(n, BF)
@@ -341,8 +341,6 @@ class AVLTreeList(object):
                 n.getParent().setLeft(n)
             if (n.getParent().getRight() == parent):
                 n.getParent().setRight(n)
-            # n.getParent().setHeight(max(n.getParent().getRight().getHeight(), n.getParent().getLeft().getHeight()) + 1)
-            # n.getParent().setSize(n.getParent().getRight().getSize() + n.getParent().getLeft().getSize() + 1)
         n.setRight(parent)
         parent.setParent(n)
         parent.setLeft(newleftforparent)
@@ -390,8 +388,6 @@ class AVLTreeList(object):
             self.first_node = self.successor(node)
         if(i == self.getSize() - 1):
             self.last_node = self.predecessor(node)
-        # if (node is None):
-        #     return -1
         if (node.getRight().isRealNode() == False and node.getLeft().isRealNode() == False):
             if (self.root != node):
                 if (node.getParent().getRight() == node):
@@ -427,7 +423,6 @@ class AVLTreeList(object):
                     node.getParent().setLeft(new_node)
             else:
                 self.root = new_node
-        #self.setSize(self.getSize()-1)
         if (node.getParent() is not None):
             return self.maintain_AVL(node.getParent())
         return 0
@@ -440,7 +435,6 @@ class AVLTreeList(object):
         temp.copy_from(x)
         x.copy_from(y)
         y.copy_from(temp)
-        # printTree(self.root)
 
     """returns the value of the first item in the list
 
@@ -560,7 +554,6 @@ class AVLTreeList(object):
         if (newnode.getParent() is not None and abs(newnode.getParent().getBF()) > 1):
             res = abs(newnode.getParent().getBF())
             self.maintain_AVL(newnode)
-        #print(indextodelete)
         self.delete(indextodelete)
         return res
 
@@ -599,7 +592,6 @@ class AVLTreeList(object):
     def setRoot(self, root):
         self.root = root
 
-    # TODO: Handle min, max  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     def successor(self, node):
         if (node == self.last()): return None
         if (node.right.isRealNode()):
@@ -654,7 +646,6 @@ def arrayToList(arr):
 
 def arrayToList_rec(arr, a, b, parent) -> AVLTreeList:
     tree = AVLTreeList()
-    # print(str(a)+ ', ' + str(b))
     med = (a + b) // 2
     root = create_leaf(arr[med])
     root.setParent(parent)
