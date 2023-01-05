@@ -202,8 +202,8 @@ def test_insert_delete(_list, _tree, n):
             
         
 def test_concat():
-    x=create_list_tree(10)
-    y=create_list_tree(10)
+    x=create_list_tree(5)
+    y=create_list_tree(1)
     tree1=x[0]
     list1=x[1]
     tree2=y[0]
@@ -294,7 +294,7 @@ def test_sorting():
 #         test_insert_delete(None, None, i)
 
 for i in range(100):
-  test_concat2(10)
+  test_concat2(40)
 
 for i in range(100):
     for k in range(math.ceil(100 + 1000/(i+1))):

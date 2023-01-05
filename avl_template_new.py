@@ -507,6 +507,8 @@ class AVLTreeList(object):
     """
 
     def concat(self, lst):
+        if(lst.getSize()==1):
+            return self.insert(self.getSize(),lst.root.getValue())
         h1 = self.root.getHeight()
         h2 = lst.root.getHeight()
         h = min(h1, h2)
@@ -517,7 +519,7 @@ class AVLTreeList(object):
         if (h1 > h2):
             goleft = False
             node = self.root
-        while (node.getHeight() > h):
+        while (node.getHeight() > h+1):
             if (goleft == True):
                 node = node.getLeft()
             else:
@@ -540,12 +542,14 @@ class AVLTreeList(object):
                 node.getParent().setRight(newnode)
             node.setParent(newnode)
         self.last_node = lst.last()
-        newnode.setHeight(h+1)
+        newnode.setHeight(max(newnode.getLeft().getHeight(),newnode.getRight().getHeight())+1)
         newnode.setSize(newnode.getLeft().getSize() + newnode.getRight().getSize() + 1)
         self.updateroot(newnode)
         if (newnode.getParent() is not None and abs(newnode.getParent().getBF()) > 1):
             res = abs(newnode.getParent().getBF())
         self.maintain_AVL(newnode)
+        print("in concat")
+        printTree(self.root)
         self.delete(indextodelete)
         return res
 
