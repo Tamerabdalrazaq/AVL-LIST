@@ -122,28 +122,60 @@ def create_list_tree(n):
     list = []
     tree.insert(0, 0)
     list.insert(0, 0)
-    for i in range(0, n):
+    for i in range(1, n):
         index = random.randrange(len(list))
+        rand = random.randrange(2**10)
         print('inserting ' + str(i) + ' at ' + str(index))
-        list.insert(index, i)
-        tree.insert(index, i)
+        list.insert(index, rand)
+        tree.insert(index, rand)
     return tree,list
 
 def test_insert_delete(_list, _tree, n):
-    print('**********************************************************************************')
+    def execute_assertions():
+        assert(len(list) == tree.getSize())
+        for i in range(1,len(list)):
+            node = tree.retrieve(i)
+            expected = list[i]
+            returned = node.value
+            assert (list[i] == tree.retrieve(i).value)
+            assert node.getBF() <= 1
+            assert (i == len(list) - 1 or tree.successor(node).value == list[i+1])
+            assert (i == 0 or tree.predecessor(node).value == list[i - 1] )
+            # assert(tree.search(returned) == i)
+            if(tree.getSize() > 0):
+                assert tree.last().value == list[-1]
+                assert tree.first().value == list[0]
+            else: 
+                assert tree.last() == None
+                assert tree.first() == None
+            def print_err(i, e, r):
+                print("ERROR!")
+                print("index: " +str(i))
+                print("expected: " +str(e))
+                print("returned: " +str(r))
     def _ins(index, v):
-        print('inserting ' + str(i) + ' at ' + str(index))
+        print('inserting ' + str(v) + ' at ' + str(index))
         list.insert(index, v)
         tree.insert(index , v)
     def _del(index):
-        print('deleting ' + ' at ' + str(i))
+        print('deleting ' + ' at ' + str(index))
         list.pop(index)
         tree.delete(index)
+
+    print('**********************************************************************************')
     tree=AVLTreeList() if _tree is None else _tree
     list = [] if _list is None else _list
-    if(_list is None):
-        tree.insert(0, 0)
-        list.insert(0, 0)
+    print('______')
+    print('______')
+    print('final tree:')
+    avl_template_new.printTree(tree.root)
+    print('final List:')
+    print(list)
+    print('______')
+    print('______')
+
+    execute_assertions()
+
     for i in range(0, n):
         if(len(list) == 0):
             _ins(0, i)
@@ -165,25 +197,10 @@ def test_insert_delete(_list, _tree, n):
     print('______')
     print('______')
 
-    for i in range(1,len(list)):
-        expected = list[i]
-        returned = tree.retrieve(i).value
-        assert (list[i] == tree.retrieve(i).value), print_err(i, expected, returned)
-        def print_err(i, e, r):
-            print("ERROR!")
-            print("index: " +str(i))
-            print("expected: " +str(e))
-            print("returned: " +str(r))
 
-    print(tree.last())
-
-    if(tree.getSize() > 0):
-        assert tree.last().value == list[-1]
-        assert tree.first().value == list[0]
-    else: 
-        assert tree.last() == None
-        assert tree.first() == None
-
+    execute_assertions()
+            
+        
 def test_concat():
     x=create_list_tree(10)
     y=create_list_tree(10)
@@ -203,6 +220,24 @@ def test_concat():
     tree1.concat(tree2)
     avl_template_new.printTree(tree1.root)
     test_insert_delete(list1+list2,tree1,20)
+
+def test_concat2(n):
+    rand1 = random.randrange(1, n)
+    rand2 = random.randrange(1, n)
+
+    tree1, list1 = create_list_tree(rand1)
+    tree2, list2 = create_list_tree(rand2)
+    print('...............................................................')
+    print_tree(tree1.getRoot())
+    print('\n\n\n')
+    print_tree(tree2.getRoot())
+    print(list1)
+    print(list2)
+    print('...............................................................\n\n')
+    tree1.concat(tree2)
+    list = list1 + list2
+    test_insert_delete(list, tree1, 20)
+
     
 def test_arrayToList():
     lst = list(range(0,100))
@@ -253,6 +288,13 @@ def test_sorting():
 
 
 
+
+# for i in range(100):
+#     for k in range(math.ceil(10 + 1000/(i+1))):
+#         test_insert_delete(None, None, i)
+
+for i in range(100):
+  test_concat2(10)
 
 for i in range(100):
     for k in range(math.ceil(100 + 1000/(i+1))):
