@@ -178,6 +178,8 @@ class AVLTreeList(object):
         self.first_node = None
         self.last_node = None
 
+    def getTreeHeight(self):
+        return self.getRoot().getHeight()
     # add your fields here
     def getSize(self):
         if(self.root is None): return 0
@@ -274,7 +276,9 @@ class AVLTreeList(object):
 
         node.setSize(node.getSize() + 1)
 
-    # TODO need to split to height, more actions...
+    
+    def append(self, val):
+        self.insert(self.length(), val)
 
     def series_of_actions(self, new_node):
         numofrot = self.maintain_AVL(new_node)
@@ -412,7 +416,6 @@ class AVLTreeList(object):
                     node.getParent().setLeft(new_node)
             else:
                 self.root = new_node
-        #self.setSize(self.getSize()-1)
         if (node.getParent() is not None):
             return self.maintain_AVL(node.getParent())
         return 0

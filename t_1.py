@@ -56,14 +56,15 @@ def random_insert_delete(n):
             rotations += _ins(0, i)
         index = random.randrange(tree.getSize())
         rotations += _ins(index, i)
-    rotations_2=0
+
+    rotations_2 = 0
     for i in range(n//4):
         index1 = random.randrange(tree.getSize())
         rotations_2 += _ins(index1, i)
         index2 = random.randrange(tree.getSize())
         rotations_2 += _del(index2)
 
-    return rotations,rotations_2
+    return (rotations, rotations_2)
 
 
 for i in range(7,8):

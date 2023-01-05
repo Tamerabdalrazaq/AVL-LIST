@@ -130,6 +130,7 @@ def create_list_tree(n):
     return tree,list
 
 def test_insert_delete(_list, _tree, n):
+    print('**********************************************************************************')
     def _ins(index, v):
         print('inserting ' + str(i) + ' at ' + str(index))
         list.insert(index, v)
@@ -175,8 +176,13 @@ def test_insert_delete(_list, _tree, n):
             print("returned: " +str(r))
 
     print(tree.last())
-    assert tree.last().value == list[-1]
-    assert tree.first().value == list[0]
+
+    if(tree.getSize() > 0):
+        assert tree.last().value == list[-1]
+        assert tree.first().value == list[0]
+    else: 
+        assert tree.last() == None
+        assert tree.first() == None
 
 def test_concat():
     x=create_list_tree(10)
@@ -245,6 +251,10 @@ def test_sorting():
     assert sortedlist.getSize() == tree.getSize()
 
 
-for i in range(600):
-    #test_insert_delete(None,None,500)
-    test_concat()
+
+
+
+for i in range(100):
+    for k in range(math.ceil(100 + 1000/(i+1))):
+        test_insert_delete(None, None, i)
+
