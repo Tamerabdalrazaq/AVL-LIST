@@ -185,21 +185,21 @@ def test_insert_delete(_list, _tree, n):
         assert tree.first() == None
 
 def test_concat():
-    x=create_list_tree(15)
-    y=create_list_tree(15)
+    x=create_list_tree(10)
+    y=create_list_tree(10)
     tree1=x[0]
     list1=x[1]
     tree2=y[0]
     list2=y[1]
-    print("*********************************")
+    print("***************tree1******************")
     avl_template_new.printTree(tree1.root)
     print(list1)
     print(tree1.getSize())
-    print("*********************************")
+    print("***************tree2******************")
     avl_template_new.printTree(tree2.root)
     print(list2)
     print(tree2.getSize())
-    print("*********************************")
+    print("***************after concat******************")
     tree1.concat(tree2)
     avl_template_new.printTree(tree1.root)
     test_insert_delete(list1+list2,tree1,20)
@@ -251,26 +251,10 @@ def test_sorting():
     assert sortedlist.getSize() == tree.getSize()
 
 
-# test_successor_predecessor()
-# inserttest()
-# test_rotation()
-# for i in range(50):
-#     test_2()
-#     print('***********************')
 
-# test_insert_delete(None,None,5000)
-# test_concat()
-# for i in range(20):
-#     test_delete2(None,None,50)
-# test_arrayToList()
-# for i in range(20): 
-#   test_listToArray()
-# for i in range(20):
-#     test_permutations()
-# for i in range(200):
-#     test_sorting()
 
 
 for i in range(100):
     for k in range(math.ceil(100 + 1000/(i+1))):
         test_insert_delete(None, None, i)
+
