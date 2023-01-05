@@ -40,7 +40,7 @@ def random_delete(n):
 
     for i in range(0, n):
         index = random.randrange(tree.getSize())
-        rotations += _del(index, i)
+        rotations += _del(index)
     return rotations
 
 def random_insert_delete(n):
@@ -56,24 +56,23 @@ def random_insert_delete(n):
             rotations += _ins(0, i)
         index = random.randrange(tree.getSize())
         rotations += _ins(index, i)
-    
-
+    rotations_2=0
     for i in range(n//4):
         index1 = random.randrange(tree.getSize())
-        rotations += _ins(index1, i)
+        rotations_2 += _ins(index1, i)
         index2 = random.randrange(tree.getSize())
-        rotations += _del(index2)
+        rotations_2 += _del(index2)
 
-    return rotations
+    return rotations,rotations_2
 
 
-for i in range(7, 11):
+for i in range(7,8):
     print('**********************************************')
     print('i = ' + str(i))
     n = 1500 * (2**i)
     print('Random Insert for size: ' + str(n))
     print(random_isert(n))
     print('Random Delete for size: ' + str(n))
-    print(random_isert(n))
+    print(random_delete(n))
     print('Random Insert_Delete for size: ' + str(n))
-    print(random_isert(n))
+    print(random_insert_delete(n))

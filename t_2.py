@@ -121,7 +121,7 @@ def linked_list_insert_last(n):
     return linked_list
 
 
-for i in range(1,2):
+for i in range(1,11):
     print('**********************first************************')
     print('i = ' + str(i))
     n = 1500 * i
