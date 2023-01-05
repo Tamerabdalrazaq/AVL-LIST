@@ -419,7 +419,10 @@ class AVLTreeList(object):
         if (node.getParent() is not None):
             return self.maintain_AVL(node.getParent())
         return 0
-
+        
+    """ 
+    Complexity: O(1)
+    """
     def switch_nodes(self, x, y):
         if (self.root == x or self.root == y):
             root = y if self.root == x else x
@@ -452,7 +455,9 @@ class AVLTreeList(object):
     @rtype: list
     @returns: a list of strings representing the data structure
     """
-
+    """ 
+    Complexity: O(n)
+    """
     def listToArray(self):
         arr = []
         x = self.first()
@@ -476,6 +481,9 @@ class AVLTreeList(object):
     @returns: an AVLTreeList where the values are sorted by the info of the original list.
     """
 
+    """ 
+    Complexity: O(n) + O(nlogn) + O(n) = O(nlogn)
+    """
     def sort(self):
         arr=self.listToArray()
         arraySort(arr)
@@ -486,7 +494,9 @@ class AVLTreeList(object):
     @rtype: list
     @returns: an AVLTreeList where the values are permuted randomly by the info of the original list. ##Use Randomness
     """
-
+    """ 
+    Complexity: O(n) + O(n) + O(n) = O(n)
+    """
     def permutation(self):
         n = self.getSize()
         arr = self.listToArray()
@@ -505,7 +515,9 @@ class AVLTreeList(object):
     @rtype: int
     @returns: the absolute value of the difference between the height of the AVL trees joined
     """
-
+    """ 
+    Complexity: O(logn)
+    """
     def concat(self, lst):
         if(lst.getSize()==1):
             return self.insert(self.getSize(),lst.root.getValue())
@@ -565,7 +577,9 @@ class AVLTreeList(object):
     @rtype: int
     @returns: the first index that contains val, -1 if not found.
     """
-
+    """ 
+    Complexity: O(n)
+    """
     def search(self, val):
         node=self.first_node
         i=0
@@ -588,6 +602,9 @@ class AVLTreeList(object):
     def setRoot(self, root):
         self.root = root
 
+    """ 
+    Complexity: O(logn)
+    """
     def successor(self, node):
         if (node == self.last()): return None
         if (node.right.isRealNode()):
@@ -600,7 +617,9 @@ class AVLTreeList(object):
             while (x != self.getRoot() and x == x.parent.right):
                 x = x.parent
             return x.parent
-
+    """ 
+    Complexity: O(logn)
+    """
     def predecessor(self, node):
         if (node == self.first()): return None
         if (node.left.isRealNode()):
@@ -621,7 +640,9 @@ def printTree(node, level=0):
         print(' ' * 8 * level + '-> ' + str(node.value) + "{" + str(node.getSize()) + "," + str(node.getHeight()) + "}")
         printTree(node.left, level + 1)
 
-
+""" 
+Complexity: O(1)
+"""
 def create_leaf(val):
     leaf = AVLNode(val)
     l_virtual = AVLNode(None)
@@ -633,13 +654,18 @@ def create_leaf(val):
     leaf.setHeight(0)
     return leaf
 
-
+""" 
+Complexity: O(n)
+"""
 def arrayToList(arr):
     tree =  arrayToList_rec(arr, 0, len(arr) - 1, None)
     tree.first_node = tree.retrieve(0)
     tree.last_node = tree.retrieve(tree.getSize() - 1)
     return tree
 
+""" 
+Complexity: T(n) = O(1) + 2T(n/2) = O(n)
+"""
 def arrayToList_rec(arr, a, b, parent) -> AVLTreeList:
     tree = AVLTreeList()
     med = (a + b) // 2
@@ -669,6 +695,10 @@ def arrayToList_rec(arr, a, b, parent) -> AVLTreeList:
 
     return tree
 
+""" 
+Merge sort
+Complexity: O(nlogn)
+"""
 def arraySort(arr):
     if len(arr) > 1:
         mid = len(arr) // 2
