@@ -1,5 +1,6 @@
 # **DATA STRUCTURES : AVL Project** 
-
+Entry file: avl_template_new.py
+Tester: tester.py
 ###### due date: 30.12
 ###### Collaborators:
 ###### **Tamer Abd  Alrazaq(T)**, **Oday Saada(O)**
@@ -20,12 +21,12 @@
 
 ## TODO(Next)
 ### Implementing AVLTreeList Class: 
-- Constructor
-- Fileds: [Size in node, first and last in AVLTree]
-- Methods: 
-- - Successor
-- - Predecessor
-- - Rotation
+~~- Constructor
+~~- Fileds: [Size in node, first and last in AVLTree]
+~~- Methods: 
+~~- - Successor
+~~- - Predecessor
+~~- - Rotation
 
 
 
