@@ -1,6 +1,6 @@
 import math
 import random
-import avl_template_new
+import avl_tree
 
 AVLNode = avl_template_new.AVLNode
 AVLTreeList = avl_template_new.AVLTreeList
