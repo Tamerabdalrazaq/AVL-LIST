@@ -1,11 +1,11 @@
 import math
 import random
-import avl_template_new
+import avl_tree
 
-AVLNode = avl_template_new.AVLNode
-AVLTreeList = avl_template_new.AVLTreeList
-atl = avl_template_new.arrayToList
-print_tree = avl_template_new.printTree
+AVLNode = avl_tree.AVLNode
+AVLTreeList = avl_tree.AVLTreeList
+atl = avl_tree.arrayToList
+print_tree = avl_tree.printTree
 
 def random_isert(n):
     def _ins(index, v):
