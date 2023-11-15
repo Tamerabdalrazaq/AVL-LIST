@@ -1,5 +1,5 @@
 # **DATA STRUCTURES : AVL Project** 
-Entry file: avl_template_new.py
+Entry file: avl_tree.py
 Tester: tester.py
 ###### due date: 30.12
 ###### Collaborators:
